@@ -17,8 +17,6 @@ public abstract class Shape {
         this.movementStrategy = m;
     }
 
-    public abstract void draw(Graphics g);
-
     public void move(int width, int height) {
         movementStrategy.move(this, width, height);
     }

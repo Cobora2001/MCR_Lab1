@@ -8,14 +8,26 @@ public class BouncingMovement implements MovementStrategy {
         shape.setX(shape.getX() + shape.getDx());
         shape.setY(shape.getY() + shape.getDy());
 
-        // Collision avec le bords gauche et droit
-        if (shape.getX() < 0 || shape.getX() + shape.getSize() > panelWidth) {
-            shape.setDx(-shape.getDx());
+        // Collision avec le bords droite et gauche (si gauche, vitesse négative, si droite, vitesse positive)
+        if (shape.getX() < 0) {
+            if(shape.getDx() < 0) {
+                shape.setDx(-shape.getDx());
+            }
+        } else if (shape.getX() + shape.getSize() > panelWidth) {
+            if(shape.getDx() > 0) {
+                shape.setDx(-shape.getDx());
+            }
         }
 
-        // Collision avec le bords haut et bas
-        if (shape.getY() < 0 || shape.getY() + shape.getSize() > panelHeight) {
-            shape.setDy(-shape.getDy());
+        // Collision avec le bords haut et bas (si haut, vitesse négative, si bas, vitesse positive)
+        if(shape.getY() < 0) {
+            if(shape.getDy() < 0) {
+                shape.setDy(-shape.getDy());
+            }
+        } else if (shape.getY() + shape.getSize() > panelHeight) {
+            if(shape.getDy() > 0) {
+                shape.setDy(-shape.getDy());
+            }
         }
     }
 
