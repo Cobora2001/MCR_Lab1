@@ -1,5 +1,4 @@
-import gui.GamePanel;
-import javax.swing.*;
+package main;
 
 
 public class Main {

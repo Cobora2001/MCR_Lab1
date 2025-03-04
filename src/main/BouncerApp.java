@@ -53,11 +53,11 @@ public class BouncerApp {
         return bouncers;
     }
 
-    public static void main(String... args){
-        SwingUtilities.invokeLater(MainFrame::getInstance);
-        GamePanel.getInstance().setTitle("Bouncer App");
-
-        new BouncerApp().run();
+    public static void main(String... args) {
+        SwingUtilities.invokeLater(() -> {
+            MainFrame.getInstance().setTitle("Bouncer App");
+            new BouncerApp().run(); // Démarre le jeu après avoir affiché la fenêtre
+        });
     }
 }
 
