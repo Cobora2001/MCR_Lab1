@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+
+import main.App;
 import shapes.Shape;
 import main.BouncerApp;
 import shapes.ShapeDrawer;
@@ -15,6 +17,7 @@ public class GamePanel extends JPanel implements Displayer {
     private static final int width = 800;
     private static final int height = 600;
     private static GamePanel instance;
+    private App app;
 
     @Override
     public int getWidth() {return super.getWidth();}
@@ -33,6 +36,7 @@ public class GamePanel extends JPanel implements Displayer {
 
     private GamePanel() {
         super();
+        this.app = null;
         setPreferredSize(new Dimension(width, height));
     }
 
@@ -47,13 +51,19 @@ public class GamePanel extends JPanel implements Displayer {
         return instance;
     }
 
+    /**
+     * Sets the app to be displayed
+     * @param app the app to be displayed
+     */
+    public void setApp(App app) {
+        this.app = app;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         //the shapes are drawn using repaint
         super.paintComponent(g);
-        for(Shape shape : BouncerApp.getBouncers()){
-            ShapeDrawer.draw(shape, g);
-        }
+        if(app != null)
+            app.draw(g);
     }
-
 }

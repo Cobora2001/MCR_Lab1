@@ -12,7 +12,7 @@ import java.util.LinkedList;
 /**
  * Main Class handling the game logic and the simulation
  */
-public class BouncerApp {
+public class BouncerApp implements App {
     private final int nbOfShapes = 50;
     private final int delay = 20;
 
@@ -21,7 +21,7 @@ public class BouncerApp {
     private final int maxSize = 40;
     private final int minSize = 10;
 
-    private static final LinkedList<Shape> bouncers = new LinkedList<>();
+    private final LinkedList<Shape> bouncers = new LinkedList<>();
 
     /**
      * Constructor of the BouncerApp class
@@ -57,15 +57,28 @@ public class BouncerApp {
                 shape.move(GamePanel.getInstance().getWidth(), GamePanel.getInstance().getHeight());
             }
 
+            GamePanel.getInstance().setApp(this);
+
             GamePanel.getInstance().repaint();
         });
         timer.start();
     }
 
     /**
+     * Is used to draw specific elements from the App on a Graphics object
+     * @param g
+     */
+    @Override
+    public void draw(Graphics g) {
+        for (Shape shape : bouncers) {
+            shape.draw(g);
+        }
+    }
+
+    /**
      * @return the list of bouncers
      */
-    public static LinkedList<Shape> getBouncers() {
+    public LinkedList<Shape> getBouncers() {
         return bouncers;
     }
 
