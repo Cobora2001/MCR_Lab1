@@ -2,6 +2,11 @@ package gui;
 
 import javax.swing.*;
 
+
+/**
+ * This class represents the main frame of the application.
+ * Singleton pattern
+ */
 public class MainFrame extends JFrame {
     private static MainFrame instance;
 
@@ -12,6 +17,10 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Returns the only instance of MainFrame
+     * @return the MainFrame instance
+     */
     public static MainFrame getInstance() {
         if(instance == null) {
             instance = new MainFrame();
@@ -19,6 +28,10 @@ public class MainFrame extends JFrame {
         return instance;
     }
 
+    /**
+     * Sets the title of the frame.
+     * @param title the title to be displayed in the frame's border.
+     */
     public void setTitle(String title) {
         super.setTitle(title);
     }

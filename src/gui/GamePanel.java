@@ -1,13 +1,15 @@
 package gui;
 
-import shapes.ShapeDrawer;
-
 import javax.swing.*;
 import java.awt.*;
 import shapes.Shape;
 import main.BouncerApp;
+import shapes.ShapeDrawer;
 
-
+/**
+ * Class representing the panel where the shapes are drawn
+ * Singleton pattern with the Display interface
+ */
 public class GamePanel extends JPanel implements Displayer {
 
     private static final int width = 800;
@@ -20,7 +22,7 @@ public class GamePanel extends JPanel implements Displayer {
     public int getHeight() {return super.getHeight();}
     @Override
     public Graphics2D getGraphics() {
-        // ⚠️ NE PAS UTILISER DIRECTEMENT ! Toujours dessiner dans paintComponent()
+        // ⚠️ Do not use this method to draw shapes, use repaint instead!!!
         return (Graphics2D) super.getGraphics(); // Cast valid because we use a JPanel
     }
 
@@ -34,6 +36,10 @@ public class GamePanel extends JPanel implements Displayer {
         setPreferredSize(new Dimension(width, height));
     }
 
+    /**
+     * Returns the only instance of GamePanel
+     * @return the GamePanel instance
+     */
     public static GamePanel getInstance() {
         if(instance == null) {
             instance = new GamePanel();
