@@ -13,6 +13,6 @@ public class Square extends Shape{
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillRect(getX(),getY(), getSize(), getY());
+        g.fillRect(getX(),getY(), getSize(), getSize());
     }
 }
