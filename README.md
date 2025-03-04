@@ -49,6 +49,11 @@ Lab1a/
 │   │
 ```
 
+## 📊 Diagramme UML
+Le diagramme UML suivant représente l'architecture du projet :
+
+![Diagramme UML](ressources/Labo1.jpg)
+
 ## 🚀 Lancement
 ### Depuis un IDE (Intellij, Eclipse, NetBeans)
 1. Ouvrir le projet dans l'IDE.
