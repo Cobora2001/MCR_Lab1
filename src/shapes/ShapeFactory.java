@@ -12,6 +12,11 @@ public class ShapeFactory {
         int dx = random.nextInt(maxAbsSpeed - minAbsSpeed) + minAbsSpeed;
         int dy = random.nextInt(maxAbsSpeed - minAbsSpeed) + minAbsSpeed;
 
+        if(maxSize == 0 || minSize == 0 || maxAbsSpeed == 0 || minAbsSpeed == 0
+        || maxSize < minSize || maxAbsSpeed < minAbsSpeed) {
+            throw new IllegalArgumentException("Invalid arguments for ShapeFactory");
+        }
+
         // Autorise des dx et dy négatifs
         if (random.nextBoolean()) {
             dx = -dx;

@@ -51,4 +51,9 @@ public abstract class Shape {
     public void setDy(int dy) {
         this.dy = dy;
     }
+
+    public void draw(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(x, y, size, size);
+    }
 }
