@@ -13,6 +13,6 @@ public class Circle extends Shape {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.fillOval(x, y, size, size);
+        g.fillOval(getX(), getY(), getSize(), getSize());
     }
 }

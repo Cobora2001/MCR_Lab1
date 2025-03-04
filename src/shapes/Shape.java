@@ -5,7 +5,7 @@ import movement.MovementStrategy;
 import java.awt.*;
 
 public abstract class Shape {
-    protected int x, y, size, dx, dy;
+    private int x, y, size, dx, dy;
     protected MovementStrategy movementStrategy;
 
     public Shape(int x, int y, int size, int dx, int dy, MovementStrategy m) {
@@ -52,8 +52,5 @@ public abstract class Shape {
         this.dy = dy;
     }
 
-    public void draw(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(x, y, size, size);
-    }
+    public abstract void draw(Graphics g);
 }
