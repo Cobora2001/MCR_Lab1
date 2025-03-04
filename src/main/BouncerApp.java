@@ -1,15 +1,17 @@
 package main;
 
 import gui.MainFrame;
-import shapes.Shape;
-
-import java.awt.*;
-import java.util.LinkedList;
-import shapes.ShapeFactory;
 import gui.GamePanel;
+import shapes.Shape;
+import shapes.ShapeFactory;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.LinkedList;
 
+/**
+ * Main Class handling the game logic and the simulation
+ */
 public class BouncerApp {
     private final int nbOfShapes = 50;
     private final int delay = 20;
@@ -21,6 +23,10 @@ public class BouncerApp {
 
     private static final LinkedList<Shape> bouncers = new LinkedList<>();
 
+    /**
+     * Constructor of the BouncerApp class
+     * Initializes the bouncers and adds them to the GamePanel
+     */
     public BouncerApp() {
         GamePanel.getInstance();
 
@@ -34,10 +40,17 @@ public class BouncerApp {
         AddBouncersToGamePanel();
     }
 
+    /**
+     * Adds the bouncers to the GamePanel
+     */
     private void AddBouncersToGamePanel() {
         GamePanel.getInstance().repaint();
     }
 
+
+    /**
+     * Starts the simulation of the bouncers
+     */
     public void run(){
         Timer timer = new Timer(delay, e -> {
             for (Shape shape : bouncers) {
@@ -49,6 +62,9 @@ public class BouncerApp {
         timer.start();
     }
 
+    /**
+     * @return the list of bouncers
+     */
     public static LinkedList<Shape> getBouncers() {
         return bouncers;
     }
