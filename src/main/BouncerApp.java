@@ -52,12 +52,11 @@ public class BouncerApp implements App {
      * Starts the simulation of the bouncers
      */
     public void run(){
+        GamePanel.getInstance().setApp(this);
         Timer timer = new Timer(delay, e -> {
             for (Shape shape : bouncers) {
                 shape.move(GamePanel.getInstance().getWidth(), GamePanel.getInstance().getHeight());
             }
-
-            GamePanel.getInstance().setApp(this);
 
             GamePanel.getInstance().repaint();
         });
@@ -89,4 +88,3 @@ public class BouncerApp implements App {
         });
     }
 }
-
