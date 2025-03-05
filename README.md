@@ -16,7 +16,7 @@ L'application permet :
 * **Singleton** : Pour garantir une unique instance de GamePanel et MainFrame.
 * **Factory** : ShapeFactory permet de créer des formes aléatoires.
 * **Strategy** : MovementStrategy définit une interface pour différents comportements de mouvement.
-* **MVC (Modèle-Vue-Contrôleur)** : Séparation entre la gestion des formes (shapes), l'affichage (gui) et la logique (main).
+* **MVC (Modèle-Vue-Contrôleur)** : Séparation entre la gestion des formes (shapes), l'affichage (gui) et la logique (apps).
 
 ## 🔧 Technologies utilisées
 - **Java** (JDK 21)
@@ -27,9 +27,9 @@ L'application permet :
 ```bash
 Lab1a/
 │── src/
-│   ├── main/                     # Point d'entrée de l'application
+│   ├── apps/                      # Point d'entrée de l'application (ou des applications)
 │   │   ├── BouncerApp.java        # Initialise et gère l'animation des formes
-│   │   ├── Main.java              # Point d’entrée principal (optionnel pour des futures tests)
+│   │   ├── App.java               # Interface pour la création d'applications intéragissant avec l'interface graphique
 │   │
 │   ├── gui/                       # Interface graphique
 │   │   ├── Displayer.java         # Interface définissant un affichage graphique
@@ -57,14 +57,14 @@ Le diagramme UML suivant représente l'architecture du projet :
 ## 🚀 Lancement
 ### Depuis un IDE (Intellij, Eclipse, NetBeans)
 1. Ouvrir le projet dans l'IDE.
-2. Exécuter main.BouncerApp.
+2. Exécuter apps.BouncerApp.
 ### Depuis la ligne de commande
 1. Compiler le projet :
 ```bash 
-javac -d out -sourcepath src src/main/BouncerApp.java
+javac -d out -sourcepath src src/apps/BouncerApp.java
 ```
 
 2. Exécuter le programme :
 ```bash
-java -cp out main.BouncerApp
+java -cp out apps.BouncerApp
 ````

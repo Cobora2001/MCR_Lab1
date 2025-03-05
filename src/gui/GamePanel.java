@@ -3,10 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-import main.App;
-import shapes.Shape;
-import main.BouncerApp;
-import shapes.ShapeDrawer;
+import apps.App;
 
 /**
  * Class representing the panel where the shapes are drawn

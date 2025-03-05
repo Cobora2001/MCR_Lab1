@@ -1,4 +1,4 @@
-package main;
+package apps;
 
 import gui.MainFrame;
 import gui.GamePanel;
