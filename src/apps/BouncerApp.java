@@ -2,18 +2,22 @@ package apps;
 
 import gui.MainFrame;
 import gui.GamePanel;
+import movement.BouncingMovement;
+import movement.FieldDimensions;
 import shapes.Bouncable;
-import shapes.ModelFactory;
+import shapes.factory.CircleFactory;
+import shapes.factory.ModelFactory;
+import shapes.factory.SquareFactory;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * Main Class handling the game logic and the simulation
  */
 public class BouncerApp implements App {
-    private final int nbOfShapes = 50;
     private final int delay = 20;
 
     private final int maxAbsSpeed = 5;
@@ -21,7 +25,12 @@ public class BouncerApp implements App {
     private final int maxSize = 40;
     private final int minSize = 10;
 
+    private final int nbPerGeneration = 10;
+
+    private FieldDimensions fieldDimensions = null;
+
     private final LinkedList<Bouncable> bouncers = new LinkedList<>();
+    private final Vector<ModelFactory> factories = new Vector<>();
 
     /**
      * Constructor of the BouncerApp class
@@ -32,10 +41,17 @@ public class BouncerApp implements App {
 
         Dimension dimension = GamePanel.getInstance().getPreferredSize();
 
-        for (int i = 0; i < nbOfShapes; i++) {
-            bouncers.add(ModelFactory.createRandomShape(dimension.width,
-                    dimension.height, maxAbsSpeed, minAbsSpeed, maxSize, minSize));
-        }
+        fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
+
+        addFactory(CircleFactory.getInstance());
+
+        CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
+
+        addFactory(SquareFactory.getInstance());
+
+        SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
+
+
 
         AddBouncersToGamePanel();
     }
@@ -88,4 +104,23 @@ public class BouncerApp implements App {
         });
     }
 
+    public void addFactory(ModelFactory factory) {
+        factories.add(factory);
+    }
+
+    private void generateFullModel() {
+        for(ModelFactory factory : factories) {
+            for(int i = 0; i < nbPerGeneration; ++i) {
+                bouncers.add(factory.createFullModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
+            }
+        }
+    }
+
+    private void generateBorderModel() {
+        for(ModelFactory factory : factories) {
+            for(int i = 0; i < nbPerGeneration; ++i) {
+                bouncers.add(factory.createBorderModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
+            }
+        }
+    }
 }

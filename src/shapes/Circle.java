@@ -18,8 +18,8 @@ public class Circle extends Model {
      * @param dx the change in x-coordinate of the circle (speed)
      * @param dy the change in y-coordinate of the circle (speed)
      */
-    public Circle(int x, int y, int size, int dx, int dy, MovementStrategy s) {
-        super(x, y, size, dx, dy, s);
+    public Circle(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color) {
+        super(x, y, size, dx, dy, s, color);
     }
 
     @Override

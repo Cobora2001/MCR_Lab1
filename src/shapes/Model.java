@@ -11,6 +11,7 @@ import java.awt.*;
 public abstract class Model implements Bouncable, Movable {
     private int x, y, size, dx, dy;
     protected MovementStrategy movementStrategy;
+    private Color color;
 
     /**
      * Constructor for the Shape class.
@@ -21,13 +22,14 @@ public abstract class Model implements Bouncable, Movable {
      * @param dy the change in y-coordinate of the shape (speed)
      * @param m the movement strategy of the shape
      */
-    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m) {
+    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m, Color color) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.dx = dx;
         this.dy = dy;
         this.movementStrategy = m;
+        this.color = color;
     }
 
     /**
