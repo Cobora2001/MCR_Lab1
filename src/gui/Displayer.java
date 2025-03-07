@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 
 /**
  * Interface defining the methods that a displayer should have.
@@ -34,4 +35,6 @@ public interface Displayer {
      * @param title the title to set.
      */
     void setTitle(String title);
+
+    void addKeyListener(KeyAdapter ka);
 }

@@ -2,8 +2,8 @@ package apps;
 
 import gui.MainFrame;
 import gui.GamePanel;
-import shapes.Shape;
-import shapes.ShapeFactory;
+import shapes.Bouncable;
+import shapes.ModelFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class BouncerApp implements App {
     private final int maxSize = 40;
     private final int minSize = 10;
 
-    private final LinkedList<Shape> bouncers = new LinkedList<>();
+    private final LinkedList<Bouncable> bouncers = new LinkedList<>();
 
     /**
      * Constructor of the BouncerApp class
@@ -33,7 +33,7 @@ public class BouncerApp implements App {
         Dimension dimension = GamePanel.getInstance().getPreferredSize();
 
         for (int i = 0; i < nbOfShapes; i++) {
-            bouncers.add(ShapeFactory.createRandomShape(dimension.width,
+            bouncers.add(ModelFactory.createRandomShape(dimension.width,
                     dimension.height, maxAbsSpeed, minAbsSpeed, maxSize, minSize));
         }
 
@@ -54,8 +54,8 @@ public class BouncerApp implements App {
     public void run(){
         GamePanel.getInstance().setApp(this);
         Timer timer = new Timer(delay, e -> {
-            for (Shape shape : bouncers) {
-                shape.move(GamePanel.getInstance().getWidth(), GamePanel.getInstance().getHeight());
+            for (Bouncable bouncable : bouncers) {
+                bouncable.move();
             }
 
             GamePanel.getInstance().repaint();
@@ -69,15 +69,15 @@ public class BouncerApp implements App {
      */
     @Override
     public void draw(Graphics g) {
-        for (Shape shape : bouncers) {
-            shape.draw(g);
+        for (Bouncable bouncable : bouncers) {
+            bouncable.draw();
         }
     }
 
     /**
      * @return the list of bouncers
      */
-    public LinkedList<Shape> getBouncers() {
+    public LinkedList<Bouncable> getBouncers() {
         return bouncers;
     }
 
@@ -87,4 +87,5 @@ public class BouncerApp implements App {
             new BouncerApp().run(); // Démarre le jeu après avoir affiché la fenêtre
         });
     }
+
 }

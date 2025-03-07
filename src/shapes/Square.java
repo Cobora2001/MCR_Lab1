@@ -1,14 +1,13 @@
 package shapes;
 
-import movement.BouncingMovement;
+import movement.MovementStrategy;
 
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * This class represents a square shape bouncing around the screen.
  */
-public class Square extends Shape{
+public class Square extends Model {
 
     /**
      * Constructor for the Square class.
@@ -18,13 +17,29 @@ public class Square extends Shape{
      * @param dx the change in x-coordinate of the square (speed)
      * @param dy the change in y-coordinate of the square (speed)
      */
-    public Square(int x, int y, int size, int dx, int dy) {
-        super(x, y, size, dx, dy, new BouncingMovement());
+    public Square(int x, int y, int size, int dx, int dy, MovementStrategy s) {
+        super(x, y, size, dx, dy, s);
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw() {
+        /*
         g.setColor(Color.BLUE);
-        g.fillRect(getX(),getY(), getSize(), getSize());
+        g.fillRect(getX(),getY(), getSize(), getSize());*/
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.ORANGE;
+    }
+
+    @Override
+    public Shape getShape() {
+        return null;
     }
 }

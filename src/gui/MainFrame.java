@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
         setContentPane(GamePanel.getInstance());
         pack();
         setVisible(true);
+        GamePanel.getInstance().requestFocusInWindow();
     }
 
     /**

@@ -1,5 +1,6 @@
 package shapes;
 
+import movement.Movable;
 import movement.MovementStrategy;
 
 import java.awt.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 /**
  * This abstract class represents a shape that can be drawn on the screen.
  */
-public abstract class Shape {
+public abstract class Model implements Bouncable, Movable {
     private int x, y, size, dx, dy;
     protected MovementStrategy movementStrategy;
 
@@ -20,7 +21,7 @@ public abstract class Shape {
      * @param dy the change in y-coordinate of the shape (speed)
      * @param m the movement strategy of the shape
      */
-    public Shape(int x, int y, int size, int dx, int dy, MovementStrategy m) {
+    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -35,7 +36,7 @@ public abstract class Shape {
      * @param height the space available to move in the y-direction
      */
     public void move(int width, int height) {
-        movementStrategy.move(this, width, height);
+        movementStrategy.move(this);
     }
 
     // Getters section
@@ -62,6 +63,9 @@ public abstract class Shape {
     public void setY(int y) {
         this.y = y;
     }
+    public void setSize(int size) {
+        this.size = size;
+    }
     public void setDx(int dx) {
         this.dx = dx;
     }
@@ -69,10 +73,9 @@ public abstract class Shape {
         this.dy = dy;
     }
 
-
-    /**
-     * Draws the shape on the screen.
-     * @param g context to draw the shape
-     */
-    public abstract void draw(Graphics g);
+    // Abstract methods from Bouncable
+    public abstract void draw();
+    public abstract void move();
+    public abstract Color getColor();
+    public abstract Shape getShape();
 }

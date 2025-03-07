@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import apps.App;
 
@@ -31,10 +33,22 @@ public class GamePanel extends JPanel implements Displayer {
     @Override
     public void setTitle(String title) { MainFrame.getInstance().setTitle(title);}
 
+    @Override
+    public void addKeyListener(KeyAdapter ka) {
+        super.addKeyListener(ka);
+    }
+
     private GamePanel() {
         super();
         this.app = null;
         setPreferredSize(new Dimension(width, height));
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                handleKeyPressed(e);
+            }
+        });
     }
 
     /**
@@ -62,5 +76,23 @@ public class GamePanel extends JPanel implements Displayer {
         super.paintComponent(g);
         if(app != null)
             app.draw(g);
+    }
+
+    private void handleKeyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_E:
+                System.out.println("e");
+                break;
+            case KeyEvent.VK_F:
+                System.out.println("f");
+                break;
+            case KeyEvent.VK_B:
+                System.out.println("b");
+                break;
+            case KeyEvent.VK_Q:
+                System.out.println("q");
+                break;
+        }
+        repaint();
     }
 }

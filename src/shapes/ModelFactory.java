@@ -1,12 +1,22 @@
 package shapes;
 
+import movement.FieldDimensions;
+
 import java.util.Random;
 
 /**
  * This class is a factory for creating random shapes.
  */
-public class ShapeFactory {
+abstract public class ModelFactory {
     private static final Random random = new Random();
+
+    private FieldDimensions dimensions;
+
+    private void checkDimensionValidity() {
+        if (dimensions == null || ! dimensions.dimensionsValid()) {
+            throw new IllegalArgumentException("Invalid arguments for ModelFactory");
+        }
+    }
 
     /**
      * Creates a random shape with random properties
@@ -19,9 +29,9 @@ public class ShapeFactory {
      * @return an instance of circle or square with random properties
      * @throws IllegalArgumentException if the arguments are invalid
      */
-    public static Shape createRandomShape(int width, int height, int maxAbsSpeed, int minAbsSpeed, int maxSize, int minSize) {
-        if (maxSize <= 0 || minSize <= 0 || maxAbsSpeed <= 0 || minAbsSpeed <= 0 || maxSize < minSize || maxAbsSpeed < minAbsSpeed) {
-            throw new IllegalArgumentException("Invalid arguments for ShapeFactory");
+    public static Model createRandomShape(int width, int height, int maxAbsSpeed, int minAbsSpeed, int maxSize, int minSize) {
+        if (minSize <= 0 || minAbsSpeed <= 0 || maxSize < minSize || maxAbsSpeed < minAbsSpeed) {
+            throw new IllegalArgumentException("Invalid arguments for ModelFactory");
         }
 
         int size = random.nextInt(maxSize - minSize) + minSize;
@@ -37,6 +47,7 @@ public class ShapeFactory {
             dy = -dy;
         }
 
-        return random.nextBoolean() ? new Circle(x, y, size, dx, dy) : new Square(x, y, size, dx, dy);
+        // return random.nextBoolean() ? new Circle(x, y, size, dx, dy) : new Square(x, y, size, dx, dy);
+        return null; // FIXME
     }
 }
