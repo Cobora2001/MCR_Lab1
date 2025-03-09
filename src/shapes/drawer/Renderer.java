@@ -1,4 +1,6 @@
-package shapes;
+package shapes.drawer;
+
+import shapes.Bouncable;
 
 import java.awt.*;
 

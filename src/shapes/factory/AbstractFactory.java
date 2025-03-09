@@ -1,5 +1,7 @@
-package shapes;
+package shapes.factory;
 
+
+import shapes.Bouncable;
 
 public interface AbstractFactory {
     Bouncable createCircle();

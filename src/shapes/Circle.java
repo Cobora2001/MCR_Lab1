@@ -1,6 +1,7 @@
 package shapes;
 
 import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -18,25 +19,8 @@ public class Circle extends Model {
      * @param dx the change in x-coordinate of the circle (speed)
      * @param dy the change in y-coordinate of the circle (speed)
      */
-    public Circle(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color) {
-        super(x, y, size, dx, dy, s, color);
-    }
-
-    @Override
-    public void draw() {
-        /*
-        g.setColor(Color.YELLOW);
-        g.fillOval(getX(), getY(), getSize(), getSize());*/
-    }
-
-    @Override
-    public void move() {
-
-    }
-
-    @Override
-    public Color getColor() {
-        return Color.BLUE;
+    public Circle(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color, Renderer renderer) {
+        super(x, y, size, dx, dy, s, color, renderer);
     }
 
     @Override

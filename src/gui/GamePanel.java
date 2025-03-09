@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Displayer {
         //the shapes are drawn using repaint
         super.paintComponent(g);
         if(app != null)
-            app.draw(g);
+            app.draw();
     }
 
     private void handleKeyPressed(KeyEvent e) {

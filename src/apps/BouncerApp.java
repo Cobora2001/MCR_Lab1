@@ -51,18 +51,11 @@ public class BouncerApp implements App {
 
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
 
+        generateFullModel();
+        generateBorderModel();
 
-
-        AddBouncersToGamePanel();
+        BouncingMovement.getInstance().setDimensions(fieldDimensions);
     }
-
-    /**
-     * Adds the bouncers to the GamePanel
-     */
-    private void AddBouncersToGamePanel() {
-        GamePanel.getInstance().repaint();
-    }
-
 
     /**
      * Starts the simulation of the bouncers
@@ -81,10 +74,9 @@ public class BouncerApp implements App {
 
     /**
      * Is used to draw specific elements from the App on a Graphics object
-     * @param g
      */
     @Override
-    public void draw(Graphics g) {
+    public void draw() {
         for (Bouncable bouncable : bouncers) {
             bouncable.draw();
         }

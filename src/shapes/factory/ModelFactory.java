@@ -3,6 +3,9 @@ package shapes.factory;
 import movement.FieldDimensions;
 import movement.MovementStrategy;
 import shapes.Model;
+import shapes.drawer.EmptyDrawer;
+import shapes.drawer.FullDrawer;
+import shapes.drawer.Renderer;
 
 import java.awt.*;
 import java.util.Random;
@@ -11,7 +14,8 @@ import java.util.Random;
  * This class is a factory for creating random shapes.
  */
 abstract public class ModelFactory {
-    private static int nbPixelsBorder = 2;
+    protected static final Renderer fullRenderer = FullDrawer.getInstance();
+    protected static final Renderer borderRenderer = EmptyDrawer.getInstance();
 
     private final Random random = new Random();
 

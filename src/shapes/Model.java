@@ -1,7 +1,9 @@
 package shapes;
 
+import gui.GamePanel;
 import movement.Movable;
 import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
 import java.awt.*;
 
@@ -9,9 +11,13 @@ import java.awt.*;
  * This abstract class represents a shape that can be drawn on the screen.
  */
 public abstract class Model implements Bouncable, Movable {
+    private static Shape shape;
     private int x, y, size, dx, dy;
     protected MovementStrategy movementStrategy;
     private Color color;
+    private Renderer renderer;
+    // Graphics2D object to draw the shape, so that we don't have to getGraphics() in the draw() method, which causes flickering
+    private Graphics2D g;
 
     /**
      * Constructor for the Shape class.
@@ -22,7 +28,7 @@ public abstract class Model implements Bouncable, Movable {
      * @param dy the change in y-coordinate of the shape (speed)
      * @param m the movement strategy of the shape
      */
-    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m, Color color) {
+    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m, Color color, Renderer renderer) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -30,6 +36,9 @@ public abstract class Model implements Bouncable, Movable {
         this.dy = dy;
         this.movementStrategy = m;
         this.color = color;
+        this.renderer = renderer;
+
+        g = GamePanel.getInstance().getGraphics();
     }
 
     /**
@@ -75,9 +84,14 @@ public abstract class Model implements Bouncable, Movable {
         this.dy = dy;
     }
 
-    // Abstract methods from Bouncable
-    public abstract void draw();
-    public abstract void move();
-    public abstract Color getColor();
+    public void draw() {
+        renderer.display(g, this);
+    }
+    public void move() {
+        movementStrategy.move(this);
+    }
+    public Color getColor() {
+        return color;
+    }
     public abstract Shape getShape();
 }

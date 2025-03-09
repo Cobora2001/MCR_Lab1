@@ -1,6 +1,7 @@
 package shapes;
 
 import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
 import java.awt.*;
 
@@ -17,20 +18,8 @@ public class Square extends Model {
      * @param dx the change in x-coordinate of the square (speed)
      * @param dy the change in y-coordinate of the square (speed)
      */
-    public Square(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color) {
-        super(x, y, size, dx, dy, s, color);
-    }
-
-    @Override
-    public void draw() {
-        /*
-        g.setColor(Color.BLUE);
-        g.fillRect(getX(),getY(), getSize(), getSize());*/
-    }
-
-    @Override
-    public void move() {
-
+    public Square(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color, Renderer renderer) {
+        super(x, y, size, dx, dy, s, color, renderer);
     }
 
     @Override
@@ -40,6 +29,6 @@ public class Square extends Model {
 
     @Override
     public Shape getShape() {
-        return null;
+        return new Rectangle(getX(), getY(), getSize(), getSize());
     }
 }
