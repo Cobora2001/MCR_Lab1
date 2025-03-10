@@ -16,8 +16,6 @@ public abstract class Model implements Bouncable, Movable {
     protected MovementStrategy movementStrategy;
     private Color color;
     private Renderer renderer;
-    // Graphics2D object to draw the shape, so that we don't have to getGraphics() in the draw() method, which causes flickering
-    private Graphics2D g;
 
     /**
      * Constructor for the Shape class.
@@ -37,8 +35,6 @@ public abstract class Model implements Bouncable, Movable {
         this.movementStrategy = m;
         this.color = color;
         this.renderer = renderer;
-
-        g = GamePanel.getInstance().getGraphics();
     }
 
     /**
@@ -85,6 +81,7 @@ public abstract class Model implements Bouncable, Movable {
     }
 
     public void draw() {
+        Graphics2D g = GamePanel.getInstance().getGraphics();
         renderer.display(g, this);
     }
     public void move() {

@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import apps.App;
+import movement.FieldDimensions;
 
 /**
  * Class representing the panel where the shapes are drawn
@@ -16,7 +17,9 @@ public class GamePanel extends JPanel implements Displayer {
     private static final int width = 800;
     private static final int height = 600;
     private static GamePanel instance;
+    private Image buffer;
     private App app;
+    private FieldDimensions fieldDimensions = null;
 
     @Override
     public int getWidth() {return super.getWidth();}
@@ -24,8 +27,7 @@ public class GamePanel extends JPanel implements Displayer {
     public int getHeight() {return super.getHeight();}
     @Override
     public Graphics2D getGraphics() {
-        // ⚠️ Do not use this method to draw shapes, use repaint instead!!!
-        return (Graphics2D) super.getGraphics(); // Cast valid because we use a JPanel
+        return buffer == null ? null : (Graphics2D) buffer.getGraphics();
     }
 
     @Override
@@ -36,6 +38,10 @@ public class GamePanel extends JPanel implements Displayer {
     @Override
     public void addKeyListener(KeyAdapter ka) {
         super.addKeyListener(ka);
+    }
+
+    public void setFieldDimensions(FieldDimensions fieldDimensions) {
+        this.fieldDimensions = fieldDimensions;
     }
 
     private GamePanel() {
@@ -49,6 +55,7 @@ public class GamePanel extends JPanel implements Displayer {
                 handleKeyPressed(e);
             }
         });
+        buffer = createImage(width, height);
     }
 
     /**
@@ -74,8 +81,10 @@ public class GamePanel extends JPanel implements Displayer {
     protected void paintComponent(Graphics g) {
         //the shapes are drawn using repaint
         super.paintComponent(g);
+        buffer = createImage(getWidth(), getHeight());
         if(app != null)
             app.draw();
+        g.drawImage(buffer, 0, 0, this);
     }
 
     private void handleKeyPressed(KeyEvent e) {

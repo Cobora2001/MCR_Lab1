@@ -1,5 +1,7 @@
 package movement;
 
+import java.awt.*;
+
 public class FieldDimensions {
     private int minX = 0;
     private int minY = 0;
@@ -44,5 +46,9 @@ public class FieldDimensions {
 
     public boolean dimensionsValid() {
         return minX <= maxX && minY <= maxY;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(minX, minY, maxX - minX, maxY - minY);
     }
 }

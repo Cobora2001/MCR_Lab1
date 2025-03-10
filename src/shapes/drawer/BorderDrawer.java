@@ -4,16 +4,16 @@ import shapes.Bouncable;
 
 import java.awt.*;
 
-public class EmptyDrawer extends ModelDrawer {
-    private static EmptyDrawer instance;
+public class BorderDrawer extends ModelDrawer {
+    private static BorderDrawer instance;
     private static final int width = 2;
 
-    private EmptyDrawer() {
+    private BorderDrawer() {
     }
 
-    public static EmptyDrawer getInstance() {
+    public static BorderDrawer getInstance() {
         if (instance == null) {
-            instance = new EmptyDrawer();
+            instance = new BorderDrawer();
         }
         return instance;
     }
@@ -23,6 +23,5 @@ public class EmptyDrawer extends ModelDrawer {
         graphics.setColor(b.getColor());
         graphics.setStroke(new BasicStroke(width));
         graphics.draw(b.getShape());
-
     }
 }

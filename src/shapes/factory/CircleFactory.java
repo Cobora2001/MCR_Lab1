@@ -3,8 +3,6 @@ package shapes.factory;
 import movement.MovementStrategy;
 import shapes.Circle;
 import shapes.Model;
-import shapes.drawer.EmptyDrawer;
-import shapes.drawer.FullDrawer;
 import shapes.drawer.Renderer;
 
 import java.awt.*;

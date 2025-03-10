@@ -1,6 +1,5 @@
 package apps;
 
-import gui.MainFrame;
 import gui.GamePanel;
 import movement.BouncingMovement;
 import movement.FieldDimensions;
@@ -44,6 +43,8 @@ public class BouncerApp implements App {
 
         fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
 
+        GamePanel.getInstance().setFieldDimensions(fieldDimensions);
+
         addFactory(CircleFactory.getInstance());
 
         CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
@@ -83,6 +84,12 @@ public class BouncerApp implements App {
      */
     @Override
     public void draw() {
+        Graphics2D g = GamePanel.getInstance().getGraphics();
+        if (g == null) {
+            return;
+        }
+        g.setColor(Color.WHITE);
+        g.fill(fieldDimensions.getBounds());
         for (Bouncable bouncable : bouncers) {
             bouncable.draw();
         }
@@ -92,23 +99,23 @@ public class BouncerApp implements App {
     public void treatKeySignal(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_E:
-                // System.out.println("e");
+                System.out.println("e");
                 clearBouncers();
                 break;
             case KeyEvent.VK_F:
-                // System.out.println("f");
+                System.out.println("f");
                 generateFullModel();
                 break;
             case KeyEvent.VK_B:
-                // System.out.println("b");
+                System.out.println("b");
                 generateBorderModel();
                 break;
             case KeyEvent.VK_Q:
-                // System.out.println("q");
+                System.out.println("q");
                 quit();
                 break;
             default:
-                // System.out.println("default");
+                System.out.println("default");
                 break;
         }
         GamePanel.getInstance().repaint();
@@ -123,7 +130,7 @@ public class BouncerApp implements App {
 
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
-            MainFrame.getInstance().setTitle("Bouncer App");
+            GamePanel.getInstance().setTitle("Bouncer App");
             new BouncerApp().run(); // Démarre le jeu après avoir affiché la fenêtre
         });
     }

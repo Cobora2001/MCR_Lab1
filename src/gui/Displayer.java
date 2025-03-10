@@ -20,8 +20,7 @@ public interface Displayer {
     int getHeight();
 
     /**
-     * Returns the graphics of the displayer.
-     * @return the graphics of the displayer.
+     * @return the image of the graphic that we want to change and display.
      */
     Graphics2D getGraphics();
 
