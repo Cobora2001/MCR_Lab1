@@ -23,11 +23,6 @@ public class Square extends Model {
     }
 
     @Override
-    public Color getColor() {
-        return Color.ORANGE;
-    }
-
-    @Override
     public Shape getShape() {
         return new Rectangle(getX(), getY(), getSize(), getSize());
     }
