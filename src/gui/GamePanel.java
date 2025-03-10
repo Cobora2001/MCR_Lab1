@@ -79,20 +79,7 @@ public class GamePanel extends JPanel implements Displayer {
     }
 
     private void handleKeyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_E:
-                System.out.println("e");
-                break;
-            case KeyEvent.VK_F:
-                System.out.println("f");
-                break;
-            case KeyEvent.VK_B:
-                System.out.println("b");
-                break;
-            case KeyEvent.VK_Q:
-                System.out.println("q");
-                break;
-        }
-        repaint();
+        if(app != null)
+            app.treatKeySignal(e);
     }
 }

@@ -11,6 +11,7 @@ import shapes.factory.SquareFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -80,6 +81,25 @@ public class BouncerApp implements App {
         for (Bouncable bouncable : bouncers) {
             bouncable.draw();
         }
+    }
+
+    @Override
+    public void treatKeySignal(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_E:
+                System.out.println("e");
+                break;
+            case KeyEvent.VK_F:
+                System.out.println("f");
+                break;
+            case KeyEvent.VK_B:
+                System.out.println("b");
+                break;
+            case KeyEvent.VK_Q:
+                System.out.println("q");
+                break;
+        }
+        GamePanel.getInstance().repaint();
     }
 
     /**
