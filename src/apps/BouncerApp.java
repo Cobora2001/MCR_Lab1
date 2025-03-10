@@ -52,9 +52,6 @@ public class BouncerApp implements App {
 
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
 
-        generateFullModel();
-        generateBorderModel();
-
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
     }
 
@@ -73,6 +70,14 @@ public class BouncerApp implements App {
         timer.start();
     }
 
+    private void clearBouncers() {
+        bouncers.clear();
+    }
+
+    private void quit() {
+        System.exit(0);
+    }
+
     /**
      * Is used to draw specific elements from the App on a Graphics object
      */
@@ -87,16 +92,23 @@ public class BouncerApp implements App {
     public void treatKeySignal(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_E:
-                System.out.println("e");
+                // System.out.println("e");
+                clearBouncers();
                 break;
             case KeyEvent.VK_F:
-                System.out.println("f");
+                // System.out.println("f");
+                generateFullModel();
                 break;
             case KeyEvent.VK_B:
-                System.out.println("b");
+                // System.out.println("b");
+                generateBorderModel();
                 break;
             case KeyEvent.VK_Q:
-                System.out.println("q");
+                // System.out.println("q");
+                quit();
+                break;
+            default:
+                // System.out.println("default");
                 break;
         }
         GamePanel.getInstance().repaint();
