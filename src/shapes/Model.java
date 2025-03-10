@@ -1,15 +1,23 @@
 package shapes;
 
+import gui.GamePanel;
+import movement.Movable;
 import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
 import java.awt.*;
 
 /**
  * This abstract class represents a shape that can be drawn on the screen.
  */
-public abstract class Shape {
+public abstract class Model implements Bouncable, Movable {
+    private static Shape shape;
     private int x, y, size, dx, dy;
     protected MovementStrategy movementStrategy;
+    private Color color;
+    private Renderer renderer;
+    // Graphics2D object to draw the shape, so that we don't have to getGraphics() in the draw() method, which causes flickering
+    private Graphics2D g;
 
     /**
      * Constructor for the Shape class.
@@ -20,13 +28,17 @@ public abstract class Shape {
      * @param dy the change in y-coordinate of the shape (speed)
      * @param m the movement strategy of the shape
      */
-    public Shape(int x, int y, int size, int dx, int dy, MovementStrategy m) {
+    public Model(int x, int y, int size, int dx, int dy, MovementStrategy m, Color color, Renderer renderer) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.dx = dx;
         this.dy = dy;
         this.movementStrategy = m;
+        this.color = color;
+        this.renderer = renderer;
+
+        g = GamePanel.getInstance().getGraphics();
     }
 
     /**
@@ -35,7 +47,7 @@ public abstract class Shape {
      * @param height the space available to move in the y-direction
      */
     public void move(int width, int height) {
-        movementStrategy.move(this, width, height);
+        movementStrategy.move(this);
     }
 
     // Getters section
@@ -62,6 +74,9 @@ public abstract class Shape {
     public void setY(int y) {
         this.y = y;
     }
+    public void setSize(int size) {
+        this.size = size;
+    }
     public void setDx(int dx) {
         this.dx = dx;
     }
@@ -69,10 +84,14 @@ public abstract class Shape {
         this.dy = dy;
     }
 
-
-    /**
-     * Draws the shape on the screen.
-     * @param g context to draw the shape
-     */
-    public abstract void draw(Graphics g);
+    public void draw() {
+        renderer.display(g, this);
+    }
+    public void move() {
+        movementStrategy.move(this);
+    }
+    public Color getColor() {
+        return color;
+    }
+    public abstract Shape getShape();
 }

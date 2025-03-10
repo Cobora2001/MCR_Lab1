@@ -1,14 +1,15 @@
 package shapes;
 
-import movement.BouncingMovement;
+import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * This class represents a circle shape bouncing around the screen.
  */
-public class Circle extends Shape {
+public class Circle extends Model {
 
     /**
      * Constructor for the Circle class.
@@ -18,13 +19,12 @@ public class Circle extends Shape {
      * @param dx the change in x-coordinate of the circle (speed)
      * @param dy the change in y-coordinate of the circle (speed)
      */
-    public Circle(int x, int y, int size, int dx, int dy) {
-        super(x, y, size, dx, dy, new BouncingMovement());
+    public Circle(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color, Renderer renderer) {
+        super(x, y, size, dx, dy, s, color, renderer);
     }
 
     @Override
-    public void draw(Graphics g) {
-        g.setColor(Color.YELLOW);
-        g.fillOval(getX(), getY(), getSize(), getSize());
+    public Shape getShape() {
+        return new Ellipse2D.Double(getX(), getY(), getSize(), getSize());
     }
 }
