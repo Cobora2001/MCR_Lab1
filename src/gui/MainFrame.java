@@ -36,7 +36,4 @@ public class MainFrame extends JFrame {
     public void setTitle(String title) {
         super.setTitle(title);
     }
-
-
-
 }

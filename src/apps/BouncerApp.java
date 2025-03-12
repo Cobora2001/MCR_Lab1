@@ -1,6 +1,8 @@
 package apps;
 
+import com.sun.tools.javac.Main;
 import gui.GamePanel;
+import gui.MainFrame;
 import movement.BouncingMovement;
 import movement.FieldDimensions;
 import shapes.Bouncable;
@@ -10,6 +12,7 @@ import shapes.factory.SquareFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -18,7 +21,7 @@ import java.util.Vector;
  * Main Class handling the game logic and the simulation
  */
 public class BouncerApp implements App {
-    private final int delay = 20;
+    private final int delay = 30;
 
     private final int maxAbsSpeed = 5;
     private final int minAbsSpeed = 1;
@@ -37,7 +40,7 @@ public class BouncerApp implements App {
      * Initializes the bouncers and adds them to the GamePanel
      */
     public BouncerApp() {
-        GamePanel.getInstance();
+        MainFrame.getInstance().setTitle("Bouncer App");
 
         Dimension dimension = GamePanel.getInstance().getPreferredSize();
 
@@ -54,21 +57,91 @@ public class BouncerApp implements App {
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
 
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
+
+        GamePanel.getInstance().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                treatKeySignal(e);
+            }
+        });
     }
 
     /**
      * Starts the simulation of the bouncers
      */
     public void run(){
-        GamePanel.getInstance().setApp(this);
-        Timer timer = new Timer(delay, e -> {
+        /*
+        // Version with a while infinite loop to prevent flickering of the models
+        // Issue: We can't use the KeyListener to interact with the models
+
+        // given that in this version, we can't add a KeyListener to the GamePanel, we manually add full models
+        generateFullModel();
+        Graphics2D g = GamePanel.getInstance().getGraphics();
+        while(true) {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(), fieldDimensions.getMaxY() - fieldDimensions.getMinY());
             for (Bouncable bouncable : bouncers) {
                 bouncable.move();
             }
-
+            draw();
             GamePanel.getInstance().repaint();
+            // make the thread sleep for a short time
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+         */
+
+        // Version with a Timer to allow the use of the KeyListener
+        // Issue: The models flicker
+        Timer timer = new Timer(delay, e -> {
+            Graphics2D g = GamePanel.getInstance().getGraphics();
+            if (g != null) {
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(),
+                        fieldDimensions.getMaxY() - fieldDimensions.getMinY());
+
+                for (Bouncable bouncable : bouncers) {
+                    bouncable.move();
+                }
+
+                draw();
+                GamePanel.getInstance().repaint();
+            }
         });
-        timer.start();
+
+        timer.start(); // Start the timer
+
+        /*
+        // Version with a Thread to allow the use of the KeyListener
+        // Issue: The models flicker
+        new Thread(() -> {
+            generateFullModel();
+            Graphics2D g = GamePanel.getInstance().getGraphics();
+            while (true) {
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(),
+                           fieldDimensions.getMaxY() - fieldDimensions.getMinY());
+
+                for (Bouncable bouncable : bouncers) {
+                    bouncable.move();
+                }
+
+                SwingUtilities.invokeLater(() -> {
+                    draw();
+                    GamePanel.getInstance().repaint();
+                });
+
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        */
     }
 
     private void clearBouncers() {
@@ -85,12 +158,10 @@ public class BouncerApp implements App {
     @Override
     public void draw() {
         Graphics2D g = GamePanel.getInstance().getGraphics();
-        if (g == null) {
+        if(g == null) {
             return;
         }
-        g.setColor(Color.WHITE);
-        g.fill(fieldDimensions.getBounds());
-        for (Bouncable bouncable : bouncers) {
+        for(Bouncable bouncable : bouncers) {
             bouncable.draw();
         }
     }
@@ -118,7 +189,6 @@ public class BouncerApp implements App {
                 System.out.println("default");
                 break;
         }
-        GamePanel.getInstance().repaint();
     }
 
     /**
