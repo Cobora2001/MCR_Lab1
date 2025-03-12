@@ -99,10 +99,6 @@ public class BouncerApp implements App {
         Timer timer = new Timer(delay, e -> {
             Graphics2D g = GamePanel.getInstance().getGraphics();
             if (g != null) {
-                g.setColor(Color.WHITE);
-                g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(),
-                        fieldDimensions.getMaxY() - fieldDimensions.getMinY());
-
                 for (Bouncable bouncable : bouncers) {
                     bouncable.move();
                 }
