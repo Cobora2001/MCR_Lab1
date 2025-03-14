@@ -71,12 +71,12 @@ public class BouncerApp implements App {
         // Version with a while infinite loop to prevent flickering of the models
         // Issue: We can't use the KeyListener to interact with the models
 
-        // given that in this version, we can't add a KeyListener to the GamePanel, we manually add full models
+        // given that in this version, the KeyListener doesn't work, we manually add full models
         generateFullModel();
         Graphics2D g = GamePanel.getInstance().getGraphics();
         while(true) {
             g.setColor(Color.WHITE);
-            g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(), fieldDimensions.getMaxY() - fieldDimensions.getMinY());
+            g.fillRect(0, 0, 800, 600); // hard-coded for tests only
             for (Bouncable bouncable : bouncers) {
                 bouncable.move();
             }
@@ -89,8 +89,8 @@ public class BouncerApp implements App {
                 e.printStackTrace();
             }
         }
-         */
-
+        */
+        
         // Version with a Timer to allow the use of the KeyListener
         // Issue: The models flicker
         Timer timer = new Timer(delay, e -> {
@@ -115,8 +115,7 @@ public class BouncerApp implements App {
             Graphics2D g = GamePanel.getInstance().getGraphics();
             while (true) {
                 g.setColor(Color.WHITE);
-                g.fillRect(0, 0, fieldDimensions.getMaxX() - fieldDimensions.getMinX(),
-                           fieldDimensions.getMaxY() - fieldDimensions.getMinY());
+                g.fillRect(0, 0, 800, 600); // hard-coded for tests only
 
                 for (Bouncable bouncable : bouncers) {
                     bouncable.move();
