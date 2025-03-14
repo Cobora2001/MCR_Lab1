@@ -30,8 +30,6 @@ public class BouncerApp implements App {
 
     private final int nbPerGeneration = 10;
 
-    private FieldDimensions fieldDimensions = null;
-
     private final LinkedList<Bouncable> bouncers = new LinkedList<>();
     private final Vector<ModelFactory> factories = new Vector<>();
 
@@ -42,20 +40,20 @@ public class BouncerApp implements App {
     public BouncerApp() {
         MainFrame.getInstance().setTitle("Bouncer App");
 
+        // We create a FieldDimensions object with the dimensions of the initial GamePanel
         Dimension dimension = GamePanel.getInstance().getPreferredSize();
+        FieldDimensions fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
 
-        fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
-
-        GamePanel.getInstance().setFieldDimensions(fieldDimensions);
-
+        // We set the dimensions of the GamePanel via the MainFrame to the FieldDimensions object
+        MainFrame.getInstance().setFieldDimensions(fieldDimensions);
         addFactory(CircleFactory.getInstance());
 
+        // We set the dimensions of the CircleFactory to the FieldDimensions object
         CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
-
         addFactory(SquareFactory.getInstance());
 
+        // We set the dimensions of the SquareFactory to the FieldDimensions object
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
-
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
 
         GamePanel.getInstance().addKeyListener(new KeyAdapter() {
@@ -166,23 +164,23 @@ public class BouncerApp implements App {
     public void treatKeySignal(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_E:
-                System.out.println("e");
+                System.out.println("Clear bouncers");
                 clearBouncers();
                 break;
             case KeyEvent.VK_F:
-                System.out.println("f");
+                System.out.println("Add full models");
                 generateFullModel();
                 break;
             case KeyEvent.VK_B:
-                System.out.println("b");
+                System.out.println("Add border models");
                 generateBorderModel();
                 break;
             case KeyEvent.VK_Q:
-                System.out.println("q");
+                System.out.println("Quit");
                 quit();
                 break;
             default:
-                System.out.println("default");
+                System.out.println("This key is not handled");
                 break;
         }
     }
@@ -196,7 +194,6 @@ public class BouncerApp implements App {
 
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
-            GamePanel.getInstance().setTitle("Bouncer App");
             new BouncerApp().run(); // Démarre le jeu après avoir affiché la fenêtre
         });
     }
