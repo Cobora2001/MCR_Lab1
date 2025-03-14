@@ -1,6 +1,5 @@
 package apps;
 
-import com.sun.tools.javac.Main;
 import gui.GamePanel;
 import gui.MainFrame;
 import movement.BouncingMovement;
