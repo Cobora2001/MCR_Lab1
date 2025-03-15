@@ -20,9 +20,9 @@ import java.util.Vector;
  * Main Class handling the game logic and the simulation
  */
 public class BouncerApp implements App {
-    private final int delay = 30;
+    private final int delay = 20;
 
-    private final int maxAbsSpeed = 5;
+    private final int maxAbsSpeed = 10;
     private final int minAbsSpeed = 1;
     private final int maxSize = 40;
     private final int minSize = 10;
@@ -34,13 +34,13 @@ public class BouncerApp implements App {
 
     /**
      * Constructor of the BouncerApp class
-     * Initializes the bouncers and adds them to the GamePanel
+     * Initializes the bouncers and adds them to the MainFrame
      */
     public BouncerApp() {
         MainFrame.getInstance().setTitle("Bouncer App");
 
-        // We create a FieldDimensions object with the dimensions of the initial GamePanel
-        Dimension dimension = GamePanel.getInstance().getPreferredSize();
+        // We create a FieldDimensions object with the dimensions of the initial GamePanel via the MainFrame
+        Dimension dimension = MainFrame.getInstance().getPreferredSize();
         FieldDimensions fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
 
         // We set the dimensions of the GamePanel via the MainFrame to the FieldDimensions object
@@ -55,7 +55,7 @@ public class BouncerApp implements App {
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
 
-        GamePanel.getInstance().addKeyListener(new KeyAdapter() {
+        MainFrame.getInstance().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 treatKeySignal(e);
@@ -90,7 +90,7 @@ public class BouncerApp implements App {
             }
         }
         */
-        
+
         // Version with a Timer to allow the use of the KeyListener
         // Issue: The models flicker
         Timer timer = new Timer(delay, e -> {

@@ -87,6 +87,10 @@ public class MainFrame extends JFrame implements Displayer {
         pack();
     }
 
+    public Dimension getPreferredSize() {
+        return gamePanel.getPreferredSize();
+    }
+
     public FieldDimensions getFieldDimensions() {
         return gamePanel.getFieldDimensions();
     }
