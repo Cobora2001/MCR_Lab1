@@ -38,14 +38,26 @@ Lab1a/
 │   │
 │   ├── movement/                   # Stratégies de mouvement
 │   │   ├── BouncingMovement.java   # Mouvement avec rebond sur les bords
+│   │   ├── FieldDimensions.java    # TODO
 │   │   ├── MovementStrategy.java   # Interface pour les stratégies de mouvement
+│   │   ├── Movable.java            # TODO
 │   │
 │   ├── shapes/                     # Gestion des formes et dessin
-│   │   ├── Circle.java             # Représente un cercle
-│   │   ├── Shape.java              # Classe abstraite des formes
-│   │   ├── ShapeDrawer.java        # Classe utilitaire pour dessiner les formes
-│   │   ├── ShapeFactory.java       # Génère des formes aléatoires
-│   │   ├── Square.java             # Représente un carré
+│   │   ├── drawer/                 # TODO
+│   │   │   ├── BorderDrawer.java   # TODO
+│   │   │   ├── FullDrawer.java     # TODO
+│   │   │   ├── ModelDrawer.java    # TODO
+│   │   │   ├── Renderer.java       # TODO
+│   │   │
+│   │   ├── factory/                # TODO
+│   │   │   ├── CircleFactory.java  # TODO
+│   │   │   ├── ModelFactory.java   # TODO
+│   │   │   ├── SquareFactory.java  # TODO
+│   │   │
+│   │   ├── Bouncable.java          # TODO
+│   │   ├── Circle.java             # TODO
+│   │   ├── Model.java              # TODO
+│   │   ├── Square.java             # TODO
 │   │
 ```
 
