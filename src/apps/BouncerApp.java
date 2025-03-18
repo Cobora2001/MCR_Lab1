@@ -2,6 +2,7 @@
 
 package apps;
 
+import gui.GamePanel;
 import gui.MainFrame;
 import movement.BouncingMovement;
 import movement.FieldDimensions;
@@ -80,14 +81,14 @@ public class BouncerApp implements App {
         // Version with a Timer to allow the use of the KeyListener
         // Issue: The models flicker
         Timer timer = new Timer(delay, e -> {
-            Graphics2D g = MainFrame.getInstance().getGraphics();
+            Graphics2D g = GamePanel.getInstance().getGraphics();
             if (g != null) {
                 for (Bouncable bouncable : bouncers) {
                     bouncable.move();
                 }
 
                 draw();
-                MainFrame.getInstance().repaint();
+                GamePanel.getInstance().repaint();
             }
         });
 
@@ -99,7 +100,7 @@ public class BouncerApp implements App {
         // given that in this version, the KeyListener doesn't work, we manually add full models
         /*
         generateFullModel();
-        Graphics2D g = MainFrame.getInstance().getGraphics();
+        Graphics2D g = GamePanel.getInstance().getGraphics();
         while(true) {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, 800, 600); // hard-coded for tests only
@@ -122,7 +123,7 @@ public class BouncerApp implements App {
         /*
         new Thread(() -> {
             generateFullModel();
-            Graphics2D g = MainFrame.getInstance().getGraphics();
+            Graphics2D g = GamePanel.getInstance().getGraphics();
             while (true) {
                 g.setColor(Color.WHITE);
                 g.fillRect(0, 0, 800, 600); // hard-coded for tests only
@@ -165,7 +166,7 @@ public class BouncerApp implements App {
      */
     @Override
     public void draw() {
-        Graphics2D g = MainFrame.getInstance().getGraphics();
+        Graphics2D g = GamePanel.getInstance().getGraphics();
         if(g == null) {
             return;
         }

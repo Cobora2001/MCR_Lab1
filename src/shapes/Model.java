@@ -1,6 +1,6 @@
 package shapes;
 
-import gui.MainFrame;
+import gui.GamePanel;
 import movement.Movable;
 import movement.MovementStrategy;
 import shapes.drawer.Renderer;
@@ -82,7 +82,7 @@ public abstract class Model implements Bouncable, Movable {
      * Draws the shape on the screen.
      */
     public void draw() {
-        Graphics2D g = MainFrame.getInstance().getGraphics();
+        Graphics2D g = GamePanel.getInstance().getGraphics();
         renderer.display(g, this);
     }
 

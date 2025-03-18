@@ -119,7 +119,7 @@ public class MainFrame extends JFrame implements Displayer {
      */
     @Override
     public Graphics2D getGraphics() {
-        return gamePanel.getGraphics();
+        return (Graphics2D) super.getGraphics();
     }
 
     /**
