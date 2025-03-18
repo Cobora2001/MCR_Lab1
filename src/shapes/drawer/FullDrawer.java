@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package shapes.drawer;
 
 import shapes.Bouncable;

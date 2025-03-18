@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package apps;
 
 import gui.GamePanel;
@@ -21,6 +23,7 @@ import java.util.Vector;
  * Main Class handling the game logic and the simulation
  */
 public class BouncerApp implements App {
+    // Constants
     private final int delay = 20;
     private final int maxAbsSpeed = 10;
     private final int minAbsSpeed = 1;
@@ -28,22 +31,30 @@ public class BouncerApp implements App {
     private final int minSize = 10;
     private final int nbPerGeneration = 10;
 
+    // List of bouncers
     private final LinkedList<Bouncable> bouncers = new LinkedList<>();
+    // List of factories
     private final Vector<ModelFactory> factories = new Vector<>();
 
+    // Constructor
     public BouncerApp() {
         MainFrame.getInstance().setTitle("Bouncer App");
 
+        // Set the dimensions of the field
         Dimension dimension = MainFrame.getInstance().getPreferredSize();
         FieldDimensions fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
         MainFrame.getInstance().setFieldDimensions(fieldDimensions);
 
+        // Add factories
         addFactory(CircleFactory.getInstance());
         CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
         addFactory(SquareFactory.getInstance());
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
+
+        // Set the dimensions of the movement strategy
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
 
+        // Add a key listener to the main frame
         MainFrame.getInstance().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -52,12 +63,20 @@ public class BouncerApp implements App {
         });
     }
 
+    /**
+     * Main method of the application
+     */
+    @Override
     public void run() {
         Timer timer = new Timer(delay, e -> updateFrame());
         timer.start();
     }
 
+    /**
+     * Updates the frame
+     */
     private void updateFrame() {
+        // Récupère l’image tampon de GamePanel
         BufferedImage buffer = GamePanel.getInstance().getBufferImage();
         Graphics2D g2 = buffer.createGraphics();
 
@@ -70,9 +89,11 @@ public class BouncerApp implements App {
             b.move(); // Déplace chaque bouncer
         }
 
+        // Dessine les objets
         draw();
 
-        g2.dispose(); // Libère les ressources graphiques
+        // Copie l’image tampon sur l’image de GamePanel
+        g2.dispose();
 
         // Demande à GamePanel de rafraîchir l’affichage
         GamePanel.getInstance().refresh();
@@ -88,15 +109,24 @@ public class BouncerApp implements App {
         }
     }
 
-
+    /**
+     * Removes all bouncers from the list
+     */
     private void clearBouncers() {
         bouncers.clear();
     }
 
+    /**
+     * Quits the application
+     */
     private void quit() {
         System.exit(0);
     }
 
+    /**
+     * Is used to treat a key signal
+     * @param e the key event
+     */
     @Override
     public void treatKeySignal(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -120,10 +150,17 @@ public class BouncerApp implements App {
         }
     }
 
+    /**
+     * Adds a factory to the list of factories
+     * @param factory the factory to add
+     */
     public void addFactory(ModelFactory factory) {
         factories.add(factory);
     }
 
+    /**
+     * Generates full models
+     */
     private void generateFullModel() {
         for (ModelFactory factory : factories) {
             for (int i = 0; i < nbPerGeneration; ++i) {
@@ -132,6 +169,9 @@ public class BouncerApp implements App {
         }
     }
 
+    /**
+     * Generates border models
+     */
     private void generateBorderModel() {
         for (ModelFactory factory : factories) {
             for (int i = 0; i < nbPerGeneration; ++i) {
@@ -140,10 +180,18 @@ public class BouncerApp implements App {
         }
     }
 
+    /**
+     * Returns the list of bouncers
+     * @return the list of bouncers
+     */
     public LinkedList<Bouncable> getBouncers() {
         return bouncers;
     }
 
+    /**
+     * Main method
+     * @param args the arguments
+     */
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> new BouncerApp().run());
     }

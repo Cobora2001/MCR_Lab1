@@ -48,6 +48,7 @@ public class BouncingMovement implements MovementStrategy {
         model.setX(model.getX() + model.getDx());
         model.setY(model.getY() + model.getDy());
 
+        // Check if the object has reached the borders of the field
         if (model.getX() < dimensions.getMinX()) {
             model.setX(dimensions.getMinX());
             model.setDx(-model.getDx());
@@ -56,6 +57,7 @@ public class BouncingMovement implements MovementStrategy {
             model.setDx(-model.getDx());
         }
 
+        // Check if the object has reached the borders of the field
         if (model.getY() < dimensions.getMinY()) {
             model.setY(dimensions.getMinY());
             model.setDy(-model.getDy());
