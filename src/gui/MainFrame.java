@@ -89,7 +89,9 @@ public class MainFrame extends JFrame implements Displayer {
         gamePanel.addKeyListener(ka);
     }
 
-
+    /**
+     * Repaints the frame.
+     */
     @Override
     public void repaint() {
         super.repaint();
