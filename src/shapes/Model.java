@@ -6,6 +6,7 @@ import movement.MovementStrategy;
 import shapes.drawer.Renderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * This abstract class represents a shape that can be drawn on the screen.
@@ -82,8 +83,8 @@ public abstract class Model implements Bouncable, Movable {
      * Draws the shape on the screen.
      */
     public void draw() {
-        Graphics2D g = GamePanel.getInstance().getGraphics();
-        renderer.display(g, this);
+        BufferedImage g = GamePanel.getInstance().getBufferImage();
+        renderer.display(g.createGraphics(), this);
     }
 
     /**
