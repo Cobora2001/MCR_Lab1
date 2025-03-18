@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package gui;
 
 import java.awt.*;
@@ -35,5 +37,9 @@ public interface Displayer {
      */
     void setTitle(String title);
 
+    /**
+     * Allows us to add a key listener to the displayer.
+     * @param ka the key listener to add.
+     */
     void addKeyListener(KeyAdapter ka);
 }

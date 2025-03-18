@@ -1,6 +1,7 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package apps;
 
-import gui.GamePanel;
 import gui.MainFrame;
 import movement.BouncingMovement;
 import movement.FieldDimensions;
@@ -20,16 +21,22 @@ import java.util.Vector;
  * Main Class handling the game logic and the simulation
  */
 public class BouncerApp implements App {
+    // Delay between each frame
     private final int delay = 20;
 
+    // Constants for the generation of the models
     private final int maxAbsSpeed = 10;
     private final int minAbsSpeed = 1;
     private final int maxSize = 40;
     private final int minSize = 10;
 
+    // Number of models generated per generation per factory
     private final int nbPerGeneration = 10;
 
+    // List of bouncers
     private final LinkedList<Bouncable> bouncers = new LinkedList<>();
+
+    // Vector of factories
     private final Vector<ModelFactory> factories = new Vector<>();
 
     /**
@@ -55,6 +62,7 @@ public class BouncerApp implements App {
         SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
         BouncingMovement.getInstance().setDimensions(fieldDimensions);
 
+        // We add a KeyListener to the MainFrame
         MainFrame.getInstance().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -65,15 +73,33 @@ public class BouncerApp implements App {
 
     /**
      * Starts the simulation of the bouncers
+     * Small note: We have tried multiple ways to run the simulation, but none of them were perfect
+     * This was discussed in class with both the teacher and the assistant, and no solution was found
      */
     public void run(){
-        /*
+        // Version with a Timer to allow the use of the KeyListener
+        // Issue: The models flicker
+        Timer timer = new Timer(delay, e -> {
+            Graphics2D g = MainFrame.getInstance().getGraphics();
+            if (g != null) {
+                for (Bouncable bouncable : bouncers) {
+                    bouncable.move();
+                }
+
+                draw();
+                MainFrame.getInstance().repaint();
+            }
+        });
+
+        timer.start(); // Start the timer
+
         // Version with a while infinite loop to prevent flickering of the models
         // Issue: We can't use the KeyListener to interact with the models
 
         // given that in this version, the KeyListener doesn't work, we manually add full models
+        /*
         generateFullModel();
-        Graphics2D g = GamePanel.getInstance().getGraphics();
+        Graphics2D g = MainFrame.getInstance().getGraphics();
         while(true) {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, 800, 600); // hard-coded for tests only
@@ -81,7 +107,7 @@ public class BouncerApp implements App {
                 bouncable.move();
             }
             draw();
-            GamePanel.getInstance().repaint();
+            MainFrame.getInstance().repaint();
             // make the thread sleep for a short time
             try {
                 Thread.sleep(delay);
@@ -91,28 +117,12 @@ public class BouncerApp implements App {
         }
         */
 
-        // Version with a Timer to allow the use of the KeyListener
-        // Issue: The models flicker
-        Timer timer = new Timer(delay, e -> {
-            Graphics2D g = GamePanel.getInstance().getGraphics();
-            if (g != null) {
-                for (Bouncable bouncable : bouncers) {
-                    bouncable.move();
-                }
-
-                draw();
-                GamePanel.getInstance().repaint();
-            }
-        });
-
-        timer.start(); // Start the timer
-
-        /*
         // Version with a Thread to allow the use of the KeyListener
         // Issue: The models flicker
+        /*
         new Thread(() -> {
             generateFullModel();
-            Graphics2D g = GamePanel.getInstance().getGraphics();
+            Graphics2D g = MainFrame.getInstance().getGraphics();
             while (true) {
                 g.setColor(Color.WHITE);
                 g.fillRect(0, 0, 800, 600); // hard-coded for tests only
@@ -123,7 +133,7 @@ public class BouncerApp implements App {
 
                 SwingUtilities.invokeLater(() -> {
                     draw();
-                    GamePanel.getInstance().repaint();
+                    MainFrame.getInstance().repaint();
                 });
 
                 try {
@@ -136,10 +146,16 @@ public class BouncerApp implements App {
         */
     }
 
+    /**
+     * Clears the list of bouncers
+     */
     private void clearBouncers() {
         bouncers.clear();
     }
 
+    /**
+     * Quits the application
+     */
     private void quit() {
         System.exit(0);
     }
@@ -149,7 +165,7 @@ public class BouncerApp implements App {
      */
     @Override
     public void draw() {
-        Graphics2D g = GamePanel.getInstance().getGraphics();
+        Graphics2D g = MainFrame.getInstance().getGraphics();
         if(g == null) {
             return;
         }
@@ -158,6 +174,10 @@ public class BouncerApp implements App {
         }
     }
 
+    /**
+     * Is used to treat a KeyEvent
+     * @param e the KeyEvent to be treated
+     */
     @Override
     public void treatKeySignal(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -184,6 +204,38 @@ public class BouncerApp implements App {
     }
 
     /**
+     * Adds a factory to the list of factories
+     * @param factory the factory to be added
+     */
+    public void addFactory(ModelFactory factory) {
+        factories.add(factory);
+    }
+
+    /**
+     * Generates full models
+     */
+    private void generateFullModel() {
+        // We generate full models for each factory registered
+        for(ModelFactory factory : factories) {
+            for(int i = 0; i < nbPerGeneration; ++i) {
+                bouncers.add(factory.createFullModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
+            }
+        }
+    }
+
+    /**
+     * Generates border models
+     */
+    private void generateBorderModel() {
+        // We generate border models for each factory registered
+        for(ModelFactory factory : factories) {
+            for(int i = 0; i < nbPerGeneration; ++i) {
+                bouncers.add(factory.createBorderModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
+            }
+        }
+    }
+
+    /**
      * @return the list of bouncers
      */
     public LinkedList<Bouncable> getBouncers() {
@@ -194,25 +246,5 @@ public class BouncerApp implements App {
         SwingUtilities.invokeLater(() -> {
             new BouncerApp().run(); // Démarre le jeu après avoir affiché la fenêtre
         });
-    }
-
-    public void addFactory(ModelFactory factory) {
-        factories.add(factory);
-    }
-
-    private void generateFullModel() {
-        for(ModelFactory factory : factories) {
-            for(int i = 0; i < nbPerGeneration; ++i) {
-                bouncers.add(factory.createFullModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
-            }
-        }
-    }
-
-    private void generateBorderModel() {
-        for(ModelFactory factory : factories) {
-            for(int i = 0; i < nbPerGeneration; ++i) {
-                bouncers.add(factory.createBorderModel(maxAbsSpeed, minAbsSpeed, maxSize, minSize, BouncingMovement.getInstance()));
-            }
-        }
     }
 }

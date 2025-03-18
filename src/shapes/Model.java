@@ -1,6 +1,6 @@
 package shapes;
 
-import gui.GamePanel;
+import gui.MainFrame;
 import movement.Movable;
 import movement.MovementStrategy;
 import shapes.drawer.Renderer;
@@ -11,10 +11,13 @@ import java.awt.*;
  * This abstract class represents a shape that can be drawn on the screen.
  */
 public abstract class Model implements Bouncable, Movable {
-    private static Shape shape;
+    // Position, size, and speed per frame of the shape
     private int x, y, size, dx, dy;
+    // Movement strategy of the shape - this determines how the shape moves
     protected MovementStrategy movementStrategy;
+    // Color of the shape
     private Color color;
+    // Renderer of the shape
     private Renderer renderer;
 
     /**
@@ -37,15 +40,6 @@ public abstract class Model implements Bouncable, Movable {
         this.renderer = renderer;
     }
 
-    /**
-     * Moves the shape on the screen.
-     * @param width the space available to move in the x-direction
-     * @param height the space available to move in the y-direction
-     */
-    public void move(int width, int height) {
-        movementStrategy.move(this);
-    }
-
     // Getters section
     public int getX() {
         return x;
@@ -62,6 +56,10 @@ public abstract class Model implements Bouncable, Movable {
     public int getDy() {
         return dy;
     }
+    public Color getColor() {
+        return color;
+    }
+    public abstract Shape getShape();
 
     // Setters section
     public void setX(int x) {
@@ -80,15 +78,18 @@ public abstract class Model implements Bouncable, Movable {
         this.dy = dy;
     }
 
+    /**
+     * Draws the shape on the screen.
+     */
     public void draw() {
-        Graphics2D g = GamePanel.getInstance().getGraphics();
+        Graphics2D g = MainFrame.getInstance().getGraphics();
         renderer.display(g, this);
     }
+
+    /**
+     * Moves the shape on the screen.
+     */
     public void move() {
         movementStrategy.move(this);
     }
-    public Color getColor() {
-        return color;
-    }
-    public abstract Shape getShape();
 }

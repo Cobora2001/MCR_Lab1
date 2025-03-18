@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package gui;
 
 import javax.swing.*;
@@ -10,9 +12,49 @@ import movement.FieldDimensions;
  * Singleton pattern with the Display interface
  */
 public class GamePanel extends JPanel {
+    // Singleton pattern instance
     private static GamePanel instance;
+
+    // Field dimensions of the panel
+    // This is used to keep track of the dimensions of the panel, and keep it coherent
+    // with other parts of the application that use the same instance of FieldDimensions
+    // As such, when the panel is resized, the dimensions of this object should be updated
     private FieldDimensions fieldDimensions = null;
 
+    /**
+     * Paints the component
+     * @param g the graphics object
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    }
+
+    /**
+     * Sets the preferred size of the panel
+     * @param dimension the dimension to set
+     */
+    @Override
+    public void setPreferredSize(Dimension dimension) {
+        super.setPreferredSize(dimension);
+    }
+
+    /**
+     * Sets the field dimensions of the panel
+     * @param fieldDimensions the field dimensions to set
+     * Comment: This method should only be used once, when the field dimensions are set
+     *          for the first time. It should not be used to update the field dimensions,
+     *          as it would change the reference of the fieldDimensions object, and other
+     *          parts of the application that use the same instance would not be updated.
+     */
+    public void setFieldDimensions(FieldDimensions fieldDimensions) {
+        this.fieldDimensions = fieldDimensions;
+    }
+
+    // Getters section
+    public FieldDimensions getFieldDimensions() {
+        return fieldDimensions;
+    }
     @Override
     public int getWidth() {return super.getWidth();}
     @Override
@@ -21,19 +63,6 @@ public class GamePanel extends JPanel {
     public Graphics2D getGraphics() {
         return (Graphics2D) super.getGraphics();
     }
-
-    @Override
-    public void repaint() { super.repaint();}
-
-    public void setFieldDimensions(FieldDimensions fieldDimensions) {
-        this.fieldDimensions = fieldDimensions;
-    }
-
-    private GamePanel() {
-        super();
-        setFocusable(true);
-    }
-
     /**
      * Returns the only instance of GamePanel
      * @return the GamePanel instance
@@ -45,17 +74,17 @@ public class GamePanel extends JPanel {
         return instance;
     }
 
+    /**
+     * Repaints the panel
+     */
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
+    public void repaint() { super.repaint();}
 
-    @Override
-    public void setPreferredSize(Dimension dimension) {
-        super.setPreferredSize(dimension);
-    }
-
-    public FieldDimensions getFieldDimensions() {
-        return fieldDimensions;
+    /**
+     * Private constructor for the GamePanel class, to implement the Singleton pattern
+     */
+    private GamePanel() {
+        super();
+        setFocusable(true);
     }
 }

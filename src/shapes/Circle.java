@@ -23,6 +23,10 @@ public class Circle extends Model {
         super(x, y, size, dx, dy, s, color, renderer);
     }
 
+    /**
+     * Returns the shape of the circle
+     * @return the shape of the circle
+     */
     @Override
     public Shape getShape() {
         return new Ellipse2D.Double(getX(), getY(), getSize(), getSize());
