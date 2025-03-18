@@ -59,7 +59,7 @@ public class MainFrame extends JFrame implements Displayer {
 
     @Override
     public void addKeyListener(KeyAdapter ka) {
-        super.addKeyListener(ka);
+        gamePanel.addKeyListener(ka);
     }
 
     @Override
