@@ -9,7 +9,7 @@ package movement;
 public class BouncingMovement implements MovementStrategy {
 
     // Singleton instance of the BouncingMovement class
-    public static BouncingMovement INSTANCE;
+    private static BouncingMovement instance;
 
     // Field dimensions of the game - must be the same instance as the one used to define the field
     // in the application
@@ -20,10 +20,10 @@ public class BouncingMovement implements MovementStrategy {
      * @return the singleton instance of the BouncingMovement class
      */
     public static BouncingMovement getInstance() {
-        if(INSTANCE == null) {
-            return INSTANCE = new BouncingMovement();
+        if(instance == null) {
+            return instance = new BouncingMovement();
         }
-        return INSTANCE;
+        return instance;
     }
 
     /**
