@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package shapes;
 
 import gui.GamePanel;

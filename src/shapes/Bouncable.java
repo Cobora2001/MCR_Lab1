@@ -1,7 +1,12 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package shapes;
 
 import java.awt.*;
 
+/**
+ * This interface defines the methods that a bouncable object should have.
+ */
 public interface Bouncable {
     /**
      * Draws the bouncable on the screen.

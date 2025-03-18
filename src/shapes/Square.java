@@ -1,3 +1,5 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package shapes;
 
 import movement.MovementStrategy;
@@ -22,6 +24,10 @@ public class Square extends Model {
         super(x, y, size, dx, dy, s, color, renderer);
     }
 
+    /**
+     * Returns the shape of the square
+     * @return the shape of the square
+     */
     @Override
     public Shape getShape() {
         return new Rectangle(getX(), getY(), getSize(), getSize());
