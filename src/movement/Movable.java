@@ -5,26 +5,46 @@ package movement;
 /**
  * This interface represents a movable object in the game.
  */
-public interface Movable {
+public abstract class Movable {
     // The x and y coordinates of the movable object
-    int x = 0;
-    int y = 0;
+    protected int x = 0;
+    protected int y = 0;
     // The change in x and y coordinates of the movable object
-    int dx = 0;
-    int dy = 0;
+    protected int dx = 0;
+    protected int dy = 0;
     // The size of the movable object
-    int size = 0;
+    protected int size = 0;
 
     // Getters and setters
-    int getX();
-    int getY();
-    int getDx();
-    int getDy();
-    int getSize();
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public int getDx() {
+        return dx;
+    }
+    public int getDy() {
+        return dy;
+    }
+    public int getSize() {
+        return size;
+    }
 
-    void setX(int x);
-    void setY(int y);
-    void setDx(int dx);
-    void setDy(int dy);
-    void setSize(int size);
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

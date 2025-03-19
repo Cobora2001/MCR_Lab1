@@ -2,6 +2,8 @@
 
 package movement;
 
+import movement.FieldDimensions; // This is in the same package
+
 /**
  * This class implements the MovementStrategy interface and provides the logic
  * for the bouncing movement of a movable object.

@@ -3,6 +3,7 @@
 package gui;
 
 import movement.FieldDimensions;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

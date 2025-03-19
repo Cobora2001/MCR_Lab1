@@ -5,7 +5,6 @@ package apps;
 import gui.GamePanel;
 import gui.MainFrame;
 import movement.BouncingMovement;
-import movement.FieldDimensions;
 import shapes.Bouncable;
 import shapes.factory.CircleFactory;
 import shapes.factory.ModelFactory;
@@ -39,14 +38,6 @@ public class BouncerApp implements App {
     // Constructor
     public BouncerApp() {
         MainFrame.getInstance().setTitle("Bouncer App");
-
-        // Set the dimensions of the field using the content pane's preferred size (800x600)
-        Dimension dimension = MainFrame.getInstance().getPreferredSize();
-
-        FieldDimensions.getInstance().setMinX(0);
-        FieldDimensions.getInstance().setMinY(0);
-        FieldDimensions.getInstance().setMaxX(dimension.width);
-        FieldDimensions.getInstance().setMaxY(dimension.height);
 
         // Add factories
         addFactory(CircleFactory.getInstance());

@@ -17,8 +17,7 @@ public class BorderDrawer implements Renderer {
     private static final int width = 2;
 
     // Private constructor
-    private BorderDrawer() {
-    }
+    private BorderDrawer() {}
 
     /**
      * Returns the singleton instance of the BorderDrawer.

@@ -13,15 +13,15 @@ import java.awt.image.BufferedImage;
 /**
  * This abstract class represents a shape that can be drawn on the screen.
  */
-public abstract class Model implements Bouncable, Movable {
+public abstract class Model extends Movable implements Bouncable {
     // Position, size, and speed per frame of the shape
     private int x, y, size, dx, dy;
     // Movement strategy of the shape - this determines how the shape moves
     protected MovementStrategy movementStrategy;
     // Color of the shape
-    private Color color;
+    private final Color color;
     // Renderer of the shape
-    private Renderer renderer;
+    private final Renderer renderer;
 
     /**
      * Constructor for the Shape class.
