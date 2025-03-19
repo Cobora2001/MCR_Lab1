@@ -1,4 +1,4 @@
-# MCR Laboratoire 1a + b
+# MCR Laboratoire 1a + b + c
 
 ## 📌 Objectif
 Ce laboratoire a pour but de pratiquer l'utilisation de **AWT/Swing** en Java en développant une application graphique interactive.
@@ -29,7 +29,7 @@ Lab1a/
 │── src/
 │   ├── apps/                      # Point d'entrée de l'application (ou des applications)
 │   │   ├── BouncerApp.java        # Initialise et gère l'animation des formes
-│   │   ├── App.java               # Interface pour la création d'applications intéragissant avec l'interface graphique
+│   │   ├── App.java               # Interface pour la création d'applications interagissant avec l'interface graphique
 │   │
 │   ├── gui/                       # Interface graphique
 │   │   ├── Displayer.java         # Interface définissant un affichage graphique
@@ -38,33 +38,33 @@ Lab1a/
 │   │
 │   ├── movement/                   # Stratégies de mouvement
 │   │   ├── BouncingMovement.java   # Mouvement avec rebond sur les bords
-│   │   ├── FieldDimensions.java    # TODO
+│   │   ├── FieldDimensions.java    # Définit les dimensions et limites du champ de mouvement
 │   │   ├── MovementStrategy.java   # Interface pour les stratégies de mouvement
-│   │   ├── Movable.java            # TODO
+│   │   ├── Movable.java            # Class abstraite pour les objets pouvant se déplacer, définissant les méthodes de déplacement
 │   │
 │   ├── shapes/                     # Gestion des formes et dessin
-│   │   ├── drawer/                 # TODO
-│   │   │   ├── BorderDrawer.java   # TODO
-│   │   │   ├── FullDrawer.java     # TODO
-│   │   │   ├── ModelDrawer.java    # TODO
-│   │   │   ├── Renderer.java       # TODO
+│   │   ├── drawer/                 # Stratégies d'affichage des formes
+│   │   │   ├── BorderDrawer.java   # Gère le dessin des formes avec uniquement un contour
+│   │   │   ├── FullDrawer.java     # Gère le dessin des formes pleines (remplies)
+│   │   │   ├── ModelDrawer.java    # Gère le dessin des formes en fonction d'un modèle défini
+│   │   │   ├── Renderer.java       # Coordonne l'affichage des formes sur l'interface graphique
 │   │   │
-│   │   ├── factory/                # TODO
-│   │   │   ├── CircleFactory.java  # TODO
-│   │   │   ├── ModelFactory.java   # TODO
-│   │   │   ├── SquareFactory.java  # TODO
+│   │   ├── factory/                # Usines de création des formes
+│   │   │   ├── CircleFactory.java  # Fabrique de cercles permettant d'instancier des objets `Circle`
+│   │   │   ├── ModelFactory.java   # Fabrique abstraite pour créer des formes à partir d'un modèle
+│   │   │   ├── SquareFactory.java  # Fabrique de carrés permettant d'instancier des objets `Square`
 │   │   │
-│   │   ├── Bouncable.java          # TODO
-│   │   ├── Circle.java             # TODO
-│   │   ├── Model.java              # TODO
-│   │   ├── Square.java             # TODO
+│   │   ├── Bouncable.java          # Interface définissant les objets pouvant rebondir sur les bords
+│   │   ├── Circle.java             # Classe représentant un cercle avec ses propriétés (taille, couleur, position)
+│   │   ├── Model.java              # Classe générique représentant un modèle de forme, pouvant être spécialisé
+│   │   ├── Square.java             # Classe représentant un carré avec ses propriétés
 │   │
 ```
 
 ## 📊 Diagramme UML
 Le diagramme UML suivant représente l'architecture du projet :
 
-![Diagramme UML](ressources/Labo1.jpg)
+![Diagramme UML](ressources/Labo.jpg)
 
 ## 🚀 Lancement
 ### Depuis un IDE (Intellij, Eclipse, NetBeans)
@@ -80,3 +80,9 @@ javac -d out -sourcepath src src/apps/BouncerApp.java
 ```bash
 java -cp out apps.BouncerApp
 ````
+## Problematique rencontré 
+Lors de notre implémentation, nous avons rencontré de nombreux problèmes de flickering en utilisant getGraphics. 
+À ce jour, nous sommes dans l'incapacité de l'utiliser et avons opté pour un double buffer avec Image. 
+Cela explique également certaines dépendances indésirable dans l'idéal quant à MainFrame et GamePanel.
+
+
