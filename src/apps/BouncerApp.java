@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 /**
- * Main Class handling the game logic and the simulation
+ * Main Class handling the game logic and the simulation.
  */
 public class BouncerApp implements App {
     // Constants
@@ -40,12 +40,12 @@ public class BouncerApp implements App {
     public BouncerApp() {
         MainFrame.getInstance().setTitle("Bouncer App");
 
-        // Set the dimensions of the field
+        // Set the dimensions of the field using the content pane's preferred size (800x600)
         Dimension dimension = MainFrame.getInstance().getPreferredSize();
         FieldDimensions fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
         MainFrame.getInstance().setFieldDimensions(fieldDimensions);
 
-        // Add factories
+        // Add factories and set their field dimensions
         addFactory(CircleFactory.getInstance());
         CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
         addFactory(SquareFactory.getInstance());
@@ -64,7 +64,7 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Main method of the application
+     * Main method of the application.
      */
     @Override
     public void run() {
@@ -73,34 +73,34 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Updates the frame
+     * Updates the frame.
      */
     private void updateFrame() {
-        // Récupère l’image tampon de GamePanel
+        // Retrieve the buffered image of GamePanel
         BufferedImage buffer = GamePanel.getInstance().getBufferImage();
         Graphics2D g2 = buffer.createGraphics();
 
-        // Efface l’image tampon pour éviter le traînage des images précédentes
+        // Clear the buffered image to avoid ghosting from previous images
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, buffer.getWidth(), buffer.getHeight());
 
-        // Déplacement des objets avant de les dessiner
+        // Move objects before drawing them
         for (Bouncable b : bouncers) {
-            b.move(); // Déplace chaque bouncer
+            b.move();
         }
 
-        // Dessine les objets
+        // Draw objects
         draw();
 
-        // Copie l’image tampon sur l’image de GamePanel
+        // Dispose the graphics context
         g2.dispose();
 
-        // Demande à GamePanel de rafraîchir l’affichage
+        // Refresh the GamePanel display
         GamePanel.getInstance().refresh();
     }
 
     /**
-     * Is used to draw specific elements from the App on a Graphics object
+     * Draws specific elements from the App on a Graphics object.
      */
     @Override
     public void draw() {
@@ -110,22 +110,22 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Removes all bouncers from the list
+     * Removes all bouncers from the list.
      */
     private void clearBouncers() {
         bouncers.clear();
     }
 
     /**
-     * Quits the application
+     * Quits the application.
      */
     private void quit() {
         System.exit(0);
     }
 
     /**
-     * Is used to treat a key signal
-     * @param e the key event
+     * Processes key events.
+     * @param e the key event.
      */
     @Override
     public void treatKeySignal(KeyEvent e) {
@@ -151,15 +151,15 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Adds a factory to the list of factories
-     * @param factory the factory to add
+     * Adds a factory to the list of factories.
+     * @param factory the factory to add.
      */
     public void addFactory(ModelFactory factory) {
         factories.add(factory);
     }
 
     /**
-     * Generates full models
+     * Generates full models.
      */
     private void generateFullModel() {
         for (ModelFactory factory : factories) {
@@ -170,7 +170,7 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Generates border models
+     * Generates border models.
      */
     private void generateBorderModel() {
         for (ModelFactory factory : factories) {
@@ -181,16 +181,16 @@ public class BouncerApp implements App {
     }
 
     /**
-     * Returns the list of bouncers
-     * @return the list of bouncers
+     * Returns the list of bouncers.
+     * @return the list of bouncers.
      */
     public LinkedList<Bouncable> getBouncers() {
         return bouncers;
     }
 
     /**
-     * Main method
-     * @param args the arguments
+     * Main method.
+     * @param args the arguments.
      */
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> new BouncerApp().run());

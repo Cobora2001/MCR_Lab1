@@ -3,22 +3,19 @@
 package gui;
 
 import movement.FieldDimensions;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
+import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * This class represents the main frame of the application.
  * Singleton pattern
  */
 public class MainFrame extends JFrame implements Displayer {
-    // Singleton pattern instance
+    // Singleton instance
     private static MainFrame instance;
 
-    // Width and height of the frame (preferred size, not fixed size)
+    // Desired content pane dimensions
     private static final int width = 800;
     private static final int height = 600;
 
@@ -26,7 +23,7 @@ public class MainFrame extends JFrame implements Displayer {
     private final GamePanel gamePanel = GamePanel.getInstance();
 
     /**
-     * Private constructor for the MainFrame class, to ensure only one instance is created.
+     * Private constructor for the MainFrame class.
      */
     private MainFrame() {
         // Allow the user to close the frame
@@ -34,9 +31,9 @@ public class MainFrame extends JFrame implements Displayer {
 
         // Set the game panel as the content pane
         setContentPane(gamePanel);
-
-        // Set the preferred size of the frame and pack it
-        setPreferredSize(new Dimension(width, height));
+        // Set the preferred size on the content pane
+        getContentPane().setPreferredSize(new Dimension(width, height));
+        pack();
 
         // Show the frame
         setVisible(true);
@@ -44,28 +41,38 @@ public class MainFrame extends JFrame implements Displayer {
         // Request focus in window
         gamePanel.requestFocusInWindow();
 
-        // Add a component listener to the game panel
+        // Add a component listener to update field dimensions on resize
         gamePanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                // Update the field dimensions when the panel is resized
-                int panelWidth = gamePanel.getWidth();
-                int panelHeight = gamePanel.getHeight();
-                // Update the field dimensions
-                // (Do not change the reference of the object using setFieldDimensions!)
-                gamePanel.getFieldDimensions().setMaxX(panelWidth);
-                gamePanel.getFieldDimensions().setMaxY(panelHeight);
+                Dimension size = gamePanel.getSize();
+                if (gamePanel.getFieldDimensions() != null) {
+                    gamePanel.getFieldDimensions().setMaxX(size.width);
+                    gamePanel.getFieldDimensions().setMaxY(size.height);
+                }
                 repaint();
+            }
+        });
+
+        // Add a window listener to update the field dimensions once the frame is shown.
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                Dimension size = gamePanel.getSize();
+                if (gamePanel.getFieldDimensions() != null) {
+                    gamePanel.getFieldDimensions().setMaxX(size.width);
+                    gamePanel.getFieldDimensions().setMaxY(size.height);
+                }
             }
         });
     }
 
     /**
-     * Returns the only instance of MainFrame
-     * @return the MainFrame instance
+     * Returns the only instance of MainFrame.
+     * @return the MainFrame instance.
      */
     public static MainFrame getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MainFrame();
         }
         return instance;
@@ -98,24 +105,6 @@ public class MainFrame extends JFrame implements Displayer {
     }
 
     /**
-     * Returns the width of the frame.
-     * @return the width of the frame.
-     */
-    @Override
-    public int getWidth() {
-        return super.getWidth();
-    }
-
-    /**
-     * Returns the height of the frame.
-     * @return the height of the frame.
-     */
-    @Override
-    public int getHeight() {
-        return super.getHeight();
-    }
-
-    /**
      * Returns the graphics object of the frame.
      * @return the graphics object of the frame.
      */
@@ -125,32 +114,33 @@ public class MainFrame extends JFrame implements Displayer {
     }
 
     /**
-     * Sets the preferred size of the frame.
+     * Sets the preferred size of the content pane.
      * @param dimension the dimension to set.
      */
     public void setPreferredSize(Dimension dimension) {
-        gamePanel.setPreferredSize(dimension);
+        getContentPane().setPreferredSize(dimension);
         pack();
     }
 
     /**
-     * Returns the preferred size of the frame.
-     * @return the preferred size of the frame.
+     * Returns the preferred size of the content pane.
+     * @return the preferred size of the content pane.
      */
+    @Override
     public Dimension getPreferredSize() {
-        return gamePanel.getPreferredSize();
+        return getContentPane().getPreferredSize();
     }
 
     /**
-     * Returns the game panel of the frame.
-     * @return the game panel of the frame.
+     * Returns the field dimensions of the game.
+     * @return the field dimensions of the game.
      */
     public FieldDimensions getFieldDimensions() {
         return gamePanel.getFieldDimensions();
     }
 
     /**
-     * Sets the field dimensions of the frame.
+     * Sets the field dimensions of the game.
      * @param fieldDimensions the field dimensions to set.
      */
     public void setFieldDimensions(FieldDimensions fieldDimensions) {
