@@ -1,35 +1,59 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package movement;
 
-import shapes.Shape;
+import movement.FieldDimensions; // This is in the same package
 
+/**
+ * This class implements the MovementStrategy interface and provides the logic
+ * for the bouncing movement of a movable object.
+ */
 public class BouncingMovement implements MovementStrategy {
-    @Override
-    public void move(Shape shape, int panelWidth, int panelHeight) {
-        shape.setX(shape.getX() + shape.getDx());
-        shape.setY(shape.getY() + shape.getDy());
 
-        // Collision avec le bords droite et gauche (si gauche, vitesse négative, si droite, vitesse positive)
-        if (shape.getX() < 0) {
-            if(shape.getDx() < 0) {
-                shape.setDx(-shape.getDx());
-            }
-        } else if (shape.getX() + shape.getSize() > panelWidth) {
-            if(shape.getDx() > 0) {
-                shape.setDx(-shape.getDx());
-            }
-        }
+    // Singleton instance of the BouncingMovement class
+    private static BouncingMovement instance;
 
-        // Collision avec le bords haut et bas (si haut, vitesse négative, si bas, vitesse positive)
-        if(shape.getY() < 0) {
-            if(shape.getDy() < 0) {
-                shape.setDy(-shape.getDy());
-            }
-        } else if (shape.getY() + shape.getSize() > panelHeight) {
-            if(shape.getDy() > 0) {
-                shape.setDy(-shape.getDy());
-            }
+    /**
+     * Returns the singleton instance of the BouncingMovement class.
+     * @return the singleton instance of the BouncingMovement class
+     */
+    public static BouncingMovement getInstance() {
+        if(instance == null) {
+            return instance = new BouncingMovement();
         }
+        return instance;
     }
 
-    //à changer car la vitesse de deplacement est la même ainsi que la redirection
+    /**
+     * Private constructor for the BouncingMovement class.
+     */
+    private BouncingMovement() {}
+
+    /**
+     * Moves the movable object according to the bouncing movement strategy.
+     * @param model the movable object to move
+     */
+    @Override
+    public void move(Movable model) {
+        model.setX(model.getX() + model.getDx());
+        model.setY(model.getY() + model.getDy());
+
+        // Check if the object has reached the borders of the field
+        if (model.getX() < FieldDimensions.getInstance().getMinX()) {
+            model.setX(FieldDimensions.getInstance().getMinX());
+            model.setDx(-model.getDx());
+        } else if (model.getX() + model.getSize() > FieldDimensions.getInstance().getMaxX()) {
+            model.setX(FieldDimensions.getInstance().getMaxX() - model.getSize());
+            model.setDx(-model.getDx());
+        }
+
+        // Check if the object has reached the borders of the field
+        if (model.getY() < FieldDimensions.getInstance().getMinY()) {
+            model.setY(FieldDimensions.getInstance().getMinY());
+            model.setDy(-model.getDy());
+        } else if (model.getY() + model.getSize() > FieldDimensions.getInstance().getMaxY()) {
+            model.setY(FieldDimensions.getInstance().getMaxY() - model.getSize());
+            model.setDy(-model.getDy());
+        }
+    }
 }

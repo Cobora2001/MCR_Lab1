@@ -1,7 +1,14 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package movement;
 
-import shapes.Shape;
-
+/**
+ * This interface provides the method signature for moving a bouncable strategically.
+ */
 public interface MovementStrategy {
-    void move(Shape shape, int panelWidth, int panelHeight);
+    /**
+     * Moves the movable object according to the movement strategy.
+     * @param movable the movable object to move
+     */
+    void move(Movable movable);
 }

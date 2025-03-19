@@ -1,12 +1,35 @@
+// Authors: Thomas Vuilleumier, Sebastian Diaz
+
 package shapes;
 
-import movement.BouncingMovement;
+import movement.MovementStrategy;
+import shapes.drawer.Renderer;
 
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 
-public class Square extends Shape{
-    public Square(int x, int y, int size, int dx, int dy) {
-        super(x, y, size, dx, dy, new BouncingMovement());
+/**
+ * This class represents a square shape bouncing around the screen.
+ */
+public class Square extends Model {
+
+    /**
+     * Constructor for the Square class.
+     * @param x the x-coordinate of the square
+     * @param y the y-coordinate of the square
+     * @param size the size of the square
+     * @param dx the change in x-coordinate of the square (speed)
+     * @param dy the change in y-coordinate of the square (speed)
+     */
+    public Square(int x, int y, int size, int dx, int dy, MovementStrategy s, Color color, Renderer renderer) {
+        super(x, y, size, dx, dy, s, color, renderer);
+    }
+
+    /**
+     * Returns the shape of the square
+     * @return the shape of the square
+     */
+    @Override
+    public Shape getShape() {
+        return new Rectangle(getX(), getY(), getSize(), getSize());
     }
 }
