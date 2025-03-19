@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * This class is a singleton that draws a bouncable object in full.
  */
-public class FullDrawer extends ModelDrawer {
+public class FullDrawer implements Renderer {
     // Singleton instance
     private static FullDrawer instance;
 

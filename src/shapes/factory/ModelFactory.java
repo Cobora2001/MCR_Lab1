@@ -22,26 +22,14 @@ abstract public class ModelFactory {
     // Random number generator
     private final Random random = new Random();
 
-    // Field dimensions
-    private FieldDimensions dimensions;
-
     /**
      * Checks if the field dimensions are valid.
      * @throws IllegalArgumentException if the field dimensions are invalid
      */
     private void checkDimensionValidity() {
-        if (dimensions == null || ! dimensions.dimensionsValid()) {
+        if(FieldDimensions.getInstance().dimensionsValid()) {
             throw new IllegalArgumentException("Invalid arguments for ModelFactory");
         }
-    }
-
-    /**
-     * Sets the field dimensions.
-     * @param dimensions the field dimensions
-     */
-    public void setFieldDimensions(FieldDimensions dimensions) {
-        this.dimensions = dimensions;
-        checkDimensionValidity();
     }
 
     /**
@@ -82,7 +70,7 @@ abstract public class ModelFactory {
      * @return a random x coordinate
      */
     protected int randomX(int size) {
-        return dimensions.getMinX() + random.nextInt((dimensions.getMaxX() - dimensions.getMinX()) - size);
+        return FieldDimensions.getInstance().getMinX() + random.nextInt((FieldDimensions.getInstance().getMaxX() - FieldDimensions.getInstance().getMinX()) - size);
     }
 
     /**
@@ -91,7 +79,7 @@ abstract public class ModelFactory {
      * @return a random y coordinate
      */
     protected int randomY(int size) {
-        return dimensions.getMinY() + random.nextInt((dimensions.getMaxY() - dimensions.getMinY()) - size);
+        return FieldDimensions.getInstance().getMinY() + random.nextInt((FieldDimensions.getInstance().getMaxY() - FieldDimensions.getInstance().getMinY()) - size);
     }
 
     /**

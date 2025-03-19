@@ -5,7 +5,6 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import movement.FieldDimensions;
 
 /**
  * Class representing the panel where the shapes are drawn.
@@ -14,9 +13,6 @@ import movement.FieldDimensions;
 public class GamePanel extends JPanel {
     // Singleton instance
     private static GamePanel instance;
-
-    // Field dimensions of the panel
-    private FieldDimensions fieldDimensions = null;
 
     // Buffered image for double buffering
     private BufferedImage bufferImage;
@@ -90,19 +86,4 @@ public class GamePanel extends JPanel {
         return bufferImage;
     }
 
-    /**
-     * Sets the field dimensions of the game.
-     * @param fieldDimensions the field dimensions.
-     */
-    public void setFieldDimensions(FieldDimensions fieldDimensions) {
-        this.fieldDimensions = fieldDimensions;
-    }
-
-    /**
-     * Returns the field dimensions of the game.
-     * @return the field dimensions.
-     */
-    public FieldDimensions getFieldDimensions() {
-        return fieldDimensions;
-    }
 }

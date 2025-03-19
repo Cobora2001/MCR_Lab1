@@ -42,14 +42,11 @@ public class MainFrame extends JFrame implements Displayer {
         gamePanel.requestFocusInWindow();
 
         // Add a component listener to update field dimensions on resize
+
         gamePanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                Dimension size = gamePanel.getSize();
-                if (gamePanel.getFieldDimensions() != null) {
-                    gamePanel.getFieldDimensions().setMaxX(size.width);
-                    gamePanel.getFieldDimensions().setMaxY(size.height);
-                }
+                resetSize();
                 repaint();
             }
         });
@@ -58,13 +55,15 @@ public class MainFrame extends JFrame implements Displayer {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                Dimension size = gamePanel.getSize();
-                if (gamePanel.getFieldDimensions() != null) {
-                    gamePanel.getFieldDimensions().setMaxX(size.width);
-                    gamePanel.getFieldDimensions().setMaxY(size.height);
-                }
+                resetSize();
             }
         });
+    }
+
+    private void resetSize() {
+        Dimension size = gamePanel.getSize();
+        FieldDimensions.getInstance().setMaxX(size.width);
+        FieldDimensions.getInstance().setMaxY(size.height);
     }
 
     /**
@@ -129,21 +128,5 @@ public class MainFrame extends JFrame implements Displayer {
     @Override
     public Dimension getPreferredSize() {
         return getContentPane().getPreferredSize();
-    }
-
-    /**
-     * Returns the field dimensions of the game.
-     * @return the field dimensions of the game.
-     */
-    public FieldDimensions getFieldDimensions() {
-        return gamePanel.getFieldDimensions();
-    }
-
-    /**
-     * Sets the field dimensions of the game.
-     * @param fieldDimensions the field dimensions to set.
-     */
-    public void setFieldDimensions(FieldDimensions fieldDimensions) {
-        gamePanel.setFieldDimensions(fieldDimensions);
     }
 }

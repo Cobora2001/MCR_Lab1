@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * This class is a singleton that draws the border of a bouncable object.
  */
-public class BorderDrawer extends ModelDrawer {
+public class BorderDrawer implements Renderer {
     // Singleton instance
     private static BorderDrawer instance;
 

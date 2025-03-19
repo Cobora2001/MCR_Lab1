@@ -42,17 +42,15 @@ public class BouncerApp implements App {
 
         // Set the dimensions of the field using the content pane's preferred size (800x600)
         Dimension dimension = MainFrame.getInstance().getPreferredSize();
-        FieldDimensions fieldDimensions = new FieldDimensions(0, 0, dimension.width, dimension.height);
-        MainFrame.getInstance().setFieldDimensions(fieldDimensions);
 
-        // Add factories and set their field dimensions
+        FieldDimensions.getInstance().setMinX(0);
+        FieldDimensions.getInstance().setMinY(0);
+        FieldDimensions.getInstance().setMaxX(dimension.width);
+        FieldDimensions.getInstance().setMaxY(dimension.height);
+
+        // Add factories
         addFactory(CircleFactory.getInstance());
-        CircleFactory.getInstance().setFieldDimensions(fieldDimensions);
         addFactory(SquareFactory.getInstance());
-        SquareFactory.getInstance().setFieldDimensions(fieldDimensions);
-
-        // Set the dimensions of the movement strategy
-        BouncingMovement.getInstance().setDimensions(fieldDimensions);
 
         // Add a key listener to the main frame
         MainFrame.getInstance().addKeyListener(new KeyAdapter() {

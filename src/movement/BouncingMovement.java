@@ -11,10 +11,6 @@ public class BouncingMovement implements MovementStrategy {
     // Singleton instance of the BouncingMovement class
     private static BouncingMovement instance;
 
-    // Field dimensions of the game - must be the same instance as the one used to define the field
-    // in the application
-    private FieldDimensions dimensions;
-
     /**
      * Returns the singleton instance of the BouncingMovement class.
      * @return the singleton instance of the BouncingMovement class
@@ -24,14 +20,6 @@ public class BouncingMovement implements MovementStrategy {
             return instance = new BouncingMovement();
         }
         return instance;
-    }
-
-    /**
-     * Sets the field dimensions of the game.
-     * @param dimensions the field dimensions of the game
-     */
-    public void setDimensions(FieldDimensions dimensions) {
-        this.dimensions = dimensions;
     }
 
     /**
@@ -49,20 +37,20 @@ public class BouncingMovement implements MovementStrategy {
         model.setY(model.getY() + model.getDy());
 
         // Check if the object has reached the borders of the field
-        if (model.getX() < dimensions.getMinX()) {
-            model.setX(dimensions.getMinX());
+        if (model.getX() < FieldDimensions.getInstance().getMinX()) {
+            model.setX(FieldDimensions.getInstance().getMinX());
             model.setDx(-model.getDx());
-        } else if (model.getX() + model.getSize() > dimensions.getMaxX()) {
-            model.setX(dimensions.getMaxX() - model.getSize());
+        } else if (model.getX() + model.getSize() > FieldDimensions.getInstance().getMaxX()) {
+            model.setX(FieldDimensions.getInstance().getMaxX() - model.getSize());
             model.setDx(-model.getDx());
         }
 
         // Check if the object has reached the borders of the field
-        if (model.getY() < dimensions.getMinY()) {
-            model.setY(dimensions.getMinY());
+        if (model.getY() < FieldDimensions.getInstance().getMinY()) {
+            model.setY(FieldDimensions.getInstance().getMinY());
             model.setDy(-model.getDy());
-        } else if (model.getY() + model.getSize() > dimensions.getMaxY()) {
-            model.setY(dimensions.getMaxY() - model.getSize());
+        } else if (model.getY() + model.getSize() > FieldDimensions.getInstance().getMaxY()) {
+            model.setY(FieldDimensions.getInstance().getMaxY() - model.getSize());
             model.setDy(-model.getDy());
         }
     }

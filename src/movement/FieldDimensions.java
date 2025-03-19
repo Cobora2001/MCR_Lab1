@@ -8,11 +8,25 @@ import java.awt.*;
  * This class represents the dimensions of the field in which the game is played.
  */
 public class FieldDimensions {
+    // Singleton instance of the FieldDimensions class
+    private static FieldDimensions instance;
+
     // The minimum and maximum x and y coordinates of the field
     private int minX = 0;
     private int minY = 0;
     private int maxX = 0;
     private int maxY = 0;
+
+    /**
+     * Returns the singleton instance of the FieldDimensions class.
+     * @return the singleton instance of the FieldDimensions class
+     */
+    public static FieldDimensions getInstance() {
+        if (instance == null) {
+            return instance = new FieldDimensions();
+        }
+        return instance;
+    }
 
     // Getters and setters
     public int getMinX() {
@@ -47,7 +61,7 @@ public class FieldDimensions {
      * @param maxX maximum x coordinate
      * @param maxY maximum y coordinate
      */
-    public FieldDimensions(int minX, int minY, int maxX, int maxY) {
+    private FieldDimensions(int minX, int minY, int maxX, int maxY) {
         this.minX = minX;
         this.minY = minY;
         this.maxX = maxX;
@@ -57,7 +71,7 @@ public class FieldDimensions {
     /**
      * Default constructor of the FieldDimensions
      */
-    public FieldDimensions() {
+    private FieldDimensions() {
         this(0, 0, 0, 0);
     }
 
